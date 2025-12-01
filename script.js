@@ -136,29 +136,6 @@ contactForm.addEventListener('submit', (e) => {
 });
 
 // ===================================
-// WATCH CARD INTERACTIONS
-// ===================================
-
-const watchCards = document.querySelectorAll('.watch-card');
-
-watchCards.forEach(card => {
-    const watchButton = card.querySelector('.watch-button');
-    const watchName = card.querySelector('.watch-name').textContent;
-    
-    watchButton.addEventListener('click', (e) => {
-        e.stopPropagation();
-        alert(`Vous avez sélectionné : ${watchName}\n\nUn conseiller vous contactera pour organiser un rendez-vous privé dans notre boutique.`);
-    });
-    
-    card.addEventListener('click', () => {
-        card.style.transform = 'scale(0.98)';
-        setTimeout(() => {
-            card.style.transform = '';
-        }, 200);
-    });
-});
-
-// ===================================
 // SCROLL ANIMATIONS
 // ===================================
 
@@ -198,6 +175,54 @@ window.addEventListener('scroll', () => {
         const speed = 0.5;
         el.style.transform = `translateY(${scrolled * speed}px)`;
     });
+});
+
+// ===================================
+// FICHE PRODUIT - MODALE
+// ===================================
+
+const watchCards = document.querySelectorAll('.watch-card');
+const productModal = document.getElementById('productModal');
+const productModalName = document.getElementById('productModalName');
+const productModalPrice = document.getElementById('productModalPrice');
+const productModalClose = document.getElementById('productModalClose');
+const productModalBackdrop = document.getElementById('productModalBackdrop');
+
+function openProductModal(card) {
+    if (!productModal || !productModalName || !productModalPrice) return;
+
+    const name = card.querySelector('.watch-name')?.textContent || '';
+    const price = card.querySelector('.watch-price')?.textContent || '';
+
+    productModalName.textContent = name;
+    productModalPrice.textContent = price;
+
+    productModal.classList.add('open');
+    productModal.setAttribute('aria-hidden', 'false');
+}
+
+function closeProductModal() {
+    if (!productModal) return;
+    productModal.classList.remove('open');
+    productModal.setAttribute('aria-hidden', 'true');
+}
+
+watchCards.forEach(card => {
+    card.addEventListener('click', () => openProductModal(card));
+});
+
+if (productModalClose) {
+    productModalClose.addEventListener('click', closeProductModal);
+}
+
+if (productModalBackdrop) {
+    productModalBackdrop.addEventListener('click', closeProductModal);
+}
+
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeProductModal();
+    }
 });
 
 // ===================================
