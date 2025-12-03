@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ne m<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -10,6 +10,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Raleway:wght@200;300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Espace pour le scroll -->
+    <div class="scroll-spacer" style="height: 100vh;"></div>
+    
+    <!-- Vidéo de fond pour toute la page -->
+    <video class="hero-video" autoplay muted loop playsinline>
+        <source src="hero-video.mp4" type="video/mp4">
+    </video>
+
     <!-- Navigation -->
     <nav class="navbar-minimal">
         <div class="nav-minimal-container">
@@ -37,6 +45,7 @@
             </div>
         </div>
         <div class="hero-overlay"></div>
+        <div class="luxury-particles" id="luxuryParticles"></div>
     </section>
 
     <!-- Philosophy Section -->
@@ -53,95 +62,32 @@
             </div>
         </div>
     </section>
+    
+    <!-- Espace pour le scroll de transition -->
+    <div class="transition-spacer" style="height: 100vh;"></div>
 
     <!-- Collection Section -->
     <section id="collection" class="collection">
+        <video class="collection-video" autoplay muted loop playsinline>
+            <source src="collection-vi4" type="video/mp4">
+        </video>
+        <div class="collection-overlay"></div>
         <div class="container">
             <div class="section-header">
                 <div class="section-label">Catalogue</div>
                 <h2 class="section-title">Sélection de montres</h2>
             </div>
             
-            <div class="collection-grid">
-                <a href="montre1.html" class="watch-card">
-                    <img src="montre/montre1.png.webp" alt="Montre 01" class="watch-img" loading="lazy">
-                    <div class="watch-info">
-                        <h3 class="watch-name">Rolex Daytona Platinum</h3>
-                        <p class="watch-price">€ 9 500</p>
-                    </div>
-                </a>
-
-                <a href="montre2.html" class="watch-card">
-                    <img src="montre/montre2.png.webp" alt="Montre 02" class="watch-img" loading="lazy">
-                    <div class="watch-info">
-                        <h3 class="watch-name">Rolex Daytona Salmon Dial</h3>
-                        <p class="watch-price">€ 12 800</p>
-                    </div>
-                </a>
-
-                <a href="montre3.html" class="watch-card">
-                    <img src="montre/montre3.png.webp" alt="Montre 03" class="watch-img" loading="lazy">
-                    <div class="watch-info">
-                        <h3 class="watch-name">Rolex Daytona Oysterflex</h3>
-                        <p class="watch-price">€ 15 200</p>
-                    </div>
-                </a>
-
-                <a href="montre4.html" class="watch-card">
-                    <img src="montre/montre4.png.webp" alt="Machiavelli Imperiale" class="watch-img" loading="lazy">
-                    <div class="watch-info">
-                        <h3 class="watch-name">Machiavelli Imperiale</h3>
-                        <p class="watch-price">€ 18 900</p>
-                    </div>
-                </a>
-
-                <a href="montre5.html" class="watch-card">
-                    <img src="montre/montre5.png.webp" alt="Machiavelli Notte Nera" class="watch-img" loading="lazy">
-                    <div class="watch-info">
-                        <h3 class="watch-name">Machiavelli Notte Nera</h3>
-                        <p class="watch-price">€ 22 400</p>
-                    </div>
-                </a>
-
-                <a href="montre6.html" class="watch-card">
-                    <img src="montre/montre6.png.webp" alt="Machiavelli Venezia" class="watch-img" loading="lazy">
-                    <div class="watch-info">
-                        <h3 class="watch-name">Machiavelli Venezia</h3>
-                        <p class="watch-price">€ 27 000</p>
-                    </div>
-                </a>
-
-                <a href="montre7.html" class="watch-card">
-                    <img src="montre/montre7.png.webp" alt="Machiavelli Aurea" class="watch-img" loading="lazy">
-                    <div class="watch-info">
-                        <h3 class="watch-name">Machiavelli Aurea</h3>
-                        <p class="watch-price">€ 29 500</p>
-                    </div>
-                </a>
-
-                <a href="montre8.html" class="watch-card">
-                    <img src="montre/montre8.png.webp" alt="Machiavelli Lusso" class="watch-img" loading="lazy">
-                    <div class="watch-info">
-                        <h3 class="watch-name">Machiavelli Lusso</h3>
-                        <p class="watch-price">€ 32 000</p>
-                    </div>
-                </a>
-
-                <a href="montre9.html" class="watch-card">
-                    <img src="montre/montre9.png.webp" alt="Machiavelli Infinito" class="watch-img" loading="lazy">
-                    <div class="watch-info">
-                        <h3 class="watch-name">Machiavelli Infinito</h3>
-                        <p class="watch-price">€ 35 000</p>
-                    </div>
-                </a>
-
-                <a href="montre10.html" class="watch-card">
-                    <img src="montre/montre10.png.webp" alt="Machiavelli Nero Sera" class="watch-img" loading="lazy">
-                    <div class="watch-info">
-                        <h3 class="watch-name">Machiavelli Nero Sera</h3>
-                        <p class="watch-price">€ 39 000</p>
-                    </div>
-                </a>
+            <div class="collection-intro">
+                <p class="collection-text">
+                    Nous sélectionnons nos montres avec précision, en privilégiant les pièces rares et emblématiques des plus grandes maisons horlogères. 
+                    Chaque garde-temps de notre collection est choisi pour son excellence, sa rareté et son potentiel de valorisation, 
+                    répondant aux attentes des collectionneurs les plus exigeants.
+                </p>
+            </div>
+            
+            <div class="catalogue-button-wrapper">
+                <a href="catalogue.html" class="catalogue-button" target="_blank">Voir le catalogue</a>
             </div>
         </div>
     </section>
@@ -189,6 +135,9 @@
 
     <!-- Craftsmanship Section -->
     <section id="craftsmanship" class="craftsmanship">
+        <video class="craftsmanship-video" autoplay muted loop playsinline>
+            <source src="collection-video.mp4" type="video/mp4">
+        </video>
         <div class="container">
             <div class="section-header">
                 <div class="section-label">Notre Expertise</div>
