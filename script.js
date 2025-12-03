@@ -7,6 +7,44 @@ const hamburger = document.getElementById('hamburger');
 const navMenu = document.getElementById('nav-menu');
 const navLinks = document.querySelectorAll('.nav-link');
 
+// Menu en grand pour navbar-minimal
+const menuToggle = document.getElementById('menuToggle');
+const fullMenu = document.getElementById('fullMenu');
+
+if (menuToggle && fullMenu) {
+    menuToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        fullMenu.classList.toggle('active');
+        document.body.style.overflow = fullMenu.classList.contains('active') ? 'hidden' : '';
+    });
+
+    // Bouton de fermeture
+    const menuClose = document.getElementById('menuClose');
+    if (menuClose) {
+        menuClose.addEventListener('click', () => {
+            fullMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    }
+
+    // Fermer le menu quand on clique sur un lien
+    const menuItems = fullMenu.querySelectorAll('.nav-minimal-item');
+    menuItems.forEach(item => {
+        item.addEventListener('click', () => {
+            fullMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    });
+
+    // Fermer le menu quand on clique en dehors
+    fullMenu.addEventListener('click', (e) => {
+        if (e.target === fullMenu) {
+            fullMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+}
+
 // Navbar scroll effect (only if navbar exists)
 if (navbar) {
     window.addEventListener('scroll', () => {
@@ -566,4 +604,32 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 console.log('🕐 Machiavelli - L\'Art du Temps - Site chargé avec succès');
+
+// ===================================
+// ÉCRAN DE CHARGEMENT
+// ===================================
+
+document.body.classList.add('loading');
+
+window.addEventListener('load', () => {
+    const loadingScreen = document.getElementById('loadingScreen');
+    if (loadingScreen) {
+        // Attendre un peu pour que l'image se charge et afficher l'animation
+        setTimeout(() => {
+            loadingScreen.classList.add('hidden');
+            document.body.classList.remove('loading');
+        }, 1500);
+    }
+});
+
+// Si la page est déjà chargée
+if (document.readyState === 'complete') {
+    const loadingScreen = document.getElementById('loadingScreen');
+    if (loadingScreen) {
+        setTimeout(() => {
+            loadingScreen.classList.add('hidden');
+            document.body.classList.remove('loading');
+        }, 1500);
+    }
+}
 

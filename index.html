@@ -10,6 +10,13 @@ ne m<!DOCTYPE html>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Raleway:wght@200;300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Écran de chargement -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <img src="aeje.jpg" alt="Loading" class="loading-image">
+        </div>
+    </div>
+
     <!-- Espace pour le scroll -->
     <div class="scroll-spacer" style="height: 100vh;"></div>
     
@@ -22,8 +29,9 @@ ne m<!DOCTYPE html>
     <nav class="navbar-minimal">
         <div class="nav-minimal-container">
             <div class="nav-minimal-menu">
-                <a href="#" class="nav-minimal-link">MENU</a>
-                <div class="nav-minimal-dropdown">
+                <a href="#" class="nav-minimal-link" id="menuToggle">MENU</a>
+                <div class="nav-minimal-dropdown" id="fullMenu">
+                    <button class="menu-close" id="menuClose">×</button>
                     <a href="#collection" class="nav-minimal-link nav-minimal-item">Catalogue</a>
                     <a href="#about" class="nav-minimal-link nav-minimal-item">Qui je suis</a>
                     <a href="#craftsmanship" class="nav-minimal-link nav-minimal-item">Expertise</a>
@@ -283,7 +291,6 @@ ne m<!DOCTYPE html>
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                        <img src="logo.jpg" alt="Machiavelli Logo" class="footer-logo-img">
                     </div>
                     <p class="footer-tagline">Belgium</p>
                     <div class="social-links">
