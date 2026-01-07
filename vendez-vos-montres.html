@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell your watches - Machiavelli</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar-minimal">
+        <div class="nav-minimal-container">
+            <div class="nav-minimal-menu">
+                <a href="#" class="nav-minimal-link" id="menuToggle">MENU</a>
+                <div class="nav-minimal-dropdown" id="fullMenu">
+                    <button class="menu-close" id="menuClose">×</button>
+                    <a href="index.html" class="nav-minimal-link nav-minimal-item">Home</a>
+                    <div class="nav-menu-item-with-submenu">
+                        <a href="index.html#collection" class="nav-minimal-link nav-minimal-item">Catalogue</a>
+                        <div class="nav-submenu">
+                            <a href="index.html#collection" class="nav-minimal-link nav-minimal-item nav-submenu-item" data-type="watch">Watches</a>
+                            <a href="index.html#collection" class="nav-minimal-link nav-minimal-item nav-submenu-item" data-type="jewelry">Jewelry</a>
+                            <a href="index.html#collection" class="nav-minimal-link nav-minimal-item nav-submenu-item" data-type="leather">Leather Goods</a>
+                        </div>
+                    </div>
+                    <a href="a-propos.html" class="nav-minimal-link nav-minimal-item">About</a>
+                    <a href="vendez-vos-montres.html" class="nav-minimal-link nav-minimal-item">Sell your watches</a>
+                    <a href="find-my-watch.html" class="nav-minimal-link nav-minimal-item">Source my watch</a>
+                    <a href="our-socials.html" class="nav-minimal-link nav-minimal-item">Our Socials</a>
+                </div>
+            </div>
+            <a href="index.html#collection" class="nav-minimal-link">STOCK</a>
+            <a href="contact.html" class="nav-minimal-link">CONTACT</a>
+            <div class="language-switcher">
+                <button class="lang-btn" id="langEn" data-lang="en">EN</button>
+                <button class="lang-btn" id="langFr" data-lang="fr">FR</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Vendez vos montres Section -->
+    <section class="catalogue-page" style="padding-top: 150px;">
+        <div class="container">
+            <div class="section-header" style="margin-bottom: 60px;">
+                <div class="section-label">Watch Sales</div>
+                <h2 class="section-title" style="color: #f4dfba;">Sell your watches</h2>
+            </div>
+
+            <div class="contact-content-wrapper" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; max-width: 1000px; margin: 0 auto;">
+                <!-- Formulaire -->
+                <div>
+                    <h3 style="color: #f4dfba; font-family: var(--font-serif); font-size: 24px; margin-bottom: 30px; font-weight: 600;">Propose your watch to us</h3>
+                    <p style="color: rgba(244, 223, 186, 0.8); font-family: var(--font-sans); font-size: 14px; line-height: 1.8; margin-bottom: 30px;">
+                        We are always looking for exceptional pieces to enrich our collection. 
+                        If you own a quality watch that you would like to sell, please do not hesitate to contact us.
+                    </p>
+                    <form id="sellWatchForm" style="display: flex; flex-direction: column; gap: 20px;">
+                        <div>
+                            <label for="sellerName" style="display: block; color: #f4dfba; font-family: var(--font-sans); font-size: 14px; margin-bottom: 8px; font-weight: 500;">Name *</label>
+                            <input type="text" id="sellerName" name="sellerName" required style="width: 100%; padding: 14px 20px; border: 1px solid rgba(244, 223, 186, 0.3); background: rgba(255, 255, 255, 0.1); color: #f4dfba; font-family: var(--font-sans); font-size: 14px; border-radius: 0; transition: all 0.3s ease; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label for="sellerEmail" style="display: block; color: #f4dfba; font-family: var(--font-sans); font-size: 14px; margin-bottom: 8px; font-weight: 500;">Email *</label>
+                            <input type="email" id="sellerEmail" name="sellerEmail" required style="width: 100%; padding: 14px 20px; border: 1px solid rgba(244, 223, 186, 0.3); background: rgba(255, 255, 255, 0.1); color: #f4dfba; font-family: var(--font-sans); font-size: 14px; border-radius: 0; transition: all 0.3s ease; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label for="watchBrand" style="display: block; color: #f4dfba; font-family: var(--font-sans); font-size: 14px; margin-bottom: 8px; font-weight: 500;">Brand *</label>
+                            <input type="text" id="watchBrand" name="watchBrand" required style="width: 100%; padding: 14px 20px; border: 1px solid rgba(244, 223, 186, 0.3); background: rgba(255, 255, 255, 0.1); color: #f4dfba; font-family: var(--font-sans); font-size: 14px; border-radius: 0; transition: all 0.3s ease; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label for="watchModel" style="display: block; color: #f4dfba; font-family: var(--font-sans); font-size: 14px; margin-bottom: 8px; font-weight: 500;">Model *</label>
+                            <input type="text" id="watchModel" name="watchModel" required style="width: 100%; padding: 14px 20px; border: 1px solid rgba(244, 223, 186, 0.3); background: rgba(255, 255, 255, 0.1); color: #f4dfba; font-family: var(--font-sans); font-size: 14px; border-radius: 0; transition: all 0.3s ease; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label for="watchReference" style="display: block; color: #f4dfba; font-family: var(--font-sans); font-size: 14px; margin-bottom: 8px; font-weight: 500;">Reference</label>
+                            <input type="text" id="watchReference" name="watchReference" style="width: 100%; padding: 14px 20px; border: 1px solid rgba(244, 223, 186, 0.3); background: rgba(255, 255, 255, 0.1); color: #f4dfba; font-family: var(--font-sans); font-size: 14px; border-radius: 0; transition: all 0.3s ease; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label for="watchCondition" style="display: block; color: #f4dfba; font-family: var(--font-sans); font-size: 14px; margin-bottom: 8px; font-weight: 500;">Condition</label>
+                            <select id="watchCondition" name="watchCondition" style="width: 100%; padding: 14px 20px; border: 1px solid rgba(244, 223, 186, 0.3); background: rgba(255, 255, 255, 0.1); color: #f4dfba; font-family: var(--font-sans); font-size: 14px; border-radius: 0; transition: all 0.3s ease; box-sizing: border-box;">
+                                <option value="">Select a condition</option>
+                                <option value="new">New</option>
+                                <option value="excellent">Excellent</option>
+                                <option value="very-good">Very Good</option>
+                                <option value="good">Good</option>
+                                <option value="fair">Fair</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="watchYear" style="display: block; color: #f4dfba; font-family: var(--font-sans); font-size: 14px; margin-bottom: 8px; font-weight: 500;">Year</label>
+                            <input type="text" id="watchYear" name="watchYear" placeholder="Ex: 2020" style="width: 100%; padding: 14px 20px; border: 1px solid rgba(244, 223, 186, 0.3); background: rgba(255, 255, 255, 0.1); color: #f4dfba; font-family: var(--font-sans); font-size: 14px; border-radius: 0; transition: all 0.3s ease; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label for="watchPrice" style="display: block; color: #f4dfba; font-family: var(--font-sans); font-size: 14px; margin-bottom: 8px; font-weight: 500;">Desired Price (€)</label>
+                            <input type="text" id="watchPrice" name="watchPrice" placeholder="Ex: 15000" style="width: 100%; padding: 14px 20px; border: 1px solid rgba(244, 223, 186, 0.3); background: rgba(255, 255, 255, 0.1); color: #f4dfba; font-family: var(--font-sans); font-size: 14px; border-radius: 0; transition: all 0.3s ease; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label for="watchDetails" style="display: block; color: #f4dfba; font-family: var(--font-sans); font-size: 14px; margin-bottom: 8px; font-weight: 500;">Additional Details</label>
+                            <textarea id="watchDetails" name="watchDetails" rows="6" placeholder="Additional information about the watch, original box, papers, etc." style="width: 100%; padding: 14px 20px; border: 1px solid rgba(244, 223, 186, 0.3); background: rgba(255, 255, 255, 0.1); color: #f4dfba; font-family: var(--font-sans); font-size: 14px; border-radius: 0; transition: all 0.3s ease; resize: vertical; box-sizing: border-box;"></textarea>
+                        </div>
+                        <button type="submit" style="padding: 16px 40px; background: transparent; color: #f4dfba; border: 2px solid #f4dfba; font-family: var(--font-sans); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; cursor: pointer; transition: all 0.3s ease; align-self: flex-start;">
+                            Send proposal
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Informations -->
+                <div>
+                    <h3 style="color: #f4dfba; font-family: var(--font-serif); font-size: 24px; margin-bottom: 30px; font-weight: 600;">How it works?</h3>
+                    <div style="display: flex; flex-direction: column; gap: 30px;">
+                        <div>
+                            <h4 style="color: #f4dfba; font-family: var(--font-sans); font-size: 18px; margin-bottom: 12px; font-weight: 600;">1. Propose your watch</h4>
+                            <p style="color: rgba(244, 223, 186, 0.8); font-family: var(--font-sans); font-size: 14px; line-height: 1.8;">
+                                Fill out the form with detailed information about your watch. The more precise the information, the better we can make you an appropriate offer.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 style="color: #f4dfba; font-family: var(--font-sans); font-size: 18px; margin-bottom: 12px; font-weight: 600;">2. Evaluation</h4>
+                            <p style="color: rgba(244, 223, 186, 0.8); font-family: var(--font-sans); font-size: 14px; line-height: 1.8;">
+                                Our experts will review your proposal and contact you as soon as possible to discuss your watch and make you an offer.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 style="color: #f4dfba; font-family: var(--font-sans); font-size: 18px; margin-bottom: 12px; font-weight: 600;">3. Transaction</h4>
+                            <p style="color: rgba(244, 223, 186, 0.8); font-family: var(--font-sans); font-size: 14px; line-height: 1.8;">
+                                If our offer suits you, we organize the transaction in a secure and transparent manner.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 40px; padding: 30px; border: 1px solid rgba(244, 223, 186, 0.3); background: rgba(255, 255, 255, 0.05);">
+                        <h4 style="color: #f4dfba; font-family: var(--font-sans); font-size: 16px; margin-bottom: 15px; font-weight: 600;">Direct Contact</h4>
+                        <p style="color: rgba(244, 223, 186, 0.8); font-family: var(--font-sans); font-size: 14px; line-height: 1.8; margin-bottom: 20px;">
+                            Do you prefer to contact us directly?
+                        </p>
+                        <a href="https://api.whatsapp.com/send?phone=32484709109&text=Hello,%20I%20would%20like%20to%20sell%20my%20watch" target="_blank" rel="noopener noreferrer" class="social-contact-link" style="margin-bottom: 15px;">
+                            <span style="font-size: 24px;">💬</span>
+                            <span style="font-family: var(--font-sans); font-size: 16px; font-weight: 500;">WhatsApp</span>
+                        </a>
+                        <a href="mailto:Machiavelliwatches@icloud.com?subject=Watch%20Sale%20Proposal" class="social-contact-link">
+                            <span style="font-size: 24px;">✉️</span>
+                            <span style="font-family: var(--font-sans); font-size: 16px; font-weight: 500;">Email</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="aeje.jpg" alt="Machiavelli" class="footer-logo-img">
+                    </div>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/machiavelli_group/" target="_blank" rel="noopener noreferrer" class="social-link">Instagram</a>
+                        <a href="https://www.tiktok.com/@machiavelli_group" target="_blank" rel="noopener noreferrer" class="social-link">TikTok</a>
+                        <a href="https://api.whatsapp.com/send?phone=32484709109" target="_blank" rel="noopener noreferrer" class="social-link">WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Machiavelli</p>
+                <div class="footer-links">
+                    <a href="mentions-legales.html">Legal Notice</a>
+                    <a href="#">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Gestion du formulaire de vente
+        document.addEventListener('DOMContentLoaded', function() {
+            const sellWatchForm = document.getElementById('sellWatchForm');
+            
+            if (sellWatchForm) {
+                sellWatchForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const sellerName = document.getElementById('sellerName').value;
+                    const sellerEmail = document.getElementById('sellerEmail').value;
+                    const watchBrand = document.getElementById('watchBrand').value;
+                    const watchModel = document.getElementById('watchModel').value;
+                    const watchReference = document.getElementById('watchReference').value;
+                    const watchCondition = document.getElementById('watchCondition').value;
+                    const watchYear = document.getElementById('watchYear').value;
+                    const watchPrice = document.getElementById('watchPrice').value;
+                    const watchDetails = document.getElementById('watchDetails').value;
+                    
+                    // Create mailto link with form information
+                    const subject = encodeURIComponent('Watch Sale Proposal');
+                    let body = `Name: ${sellerName}\nEmail: ${sellerEmail}\n\n`;
+                    body += `Watch Details:\n`;
+                    body += `Brand: ${watchBrand}\n`;
+                    body += `Model: ${watchModel}\n`;
+                    if (watchReference) body += `Reference: ${watchReference}\n`;
+                    if (watchCondition) body += `Condition: ${watchCondition}\n`;
+                    if (watchYear) body += `Year: ${watchYear}\n`;
+                    if (watchPrice) body += `Desired Price: ${watchPrice} €\n`;
+                    if (watchDetails) body += `\nAdditional Details:\n${watchDetails}\n`;
+                    
+                    const mailtoLink = `mailto:Machiavelliwatches@icloud.com?subject=${subject}&body=${encodeURIComponent(body)}`;
+                    
+                    // Open email client
+                    window.location.href = mailtoLink;
+                    
+                    // Display confirmation message
+                    alert('Your email client will open. Thank you for your proposal!');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+

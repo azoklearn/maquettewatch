@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        @media (max-width: 768px) {
+            .collection[style*="background: #f4dfba"] {
+                padding: 60px 0 !important;
+            }
+            .collection[style*="background: #f4dfba"] .container {
+                padding: 0 25px !important;
+            }
+            .collection[style*="background: #f4dfba"] .section-header {
+                margin-bottom: 40px !important;
+            }
+            .collection[style*="background: #f4dfba"] .collection-intro {
+                padding: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar-minimal">
+        <div class="nav-minimal-container">
+            <div class="nav-minimal-menu">
+                <a href="#" class="nav-minimal-link" id="menuToggle">MENU</a>
+                <div class="nav-minimal-dropdown" id="fullMenu">
+                    <button class="menu-close" id="menuClose">×</button>
+                    <a href="index.html" class="nav-minimal-link nav-minimal-item">Home</a>
+                    <div class="nav-menu-item-with-submenu">
+                        <a href="catalogue.html" class="nav-minimal-link nav-minimal-item">Catalogue</a>
+                        <div class="nav-submenu">
+                            <a href="catalogue.html" class="nav-minimal-link nav-minimal-item nav-submenu-item" data-type="watch">Watches</a>
+                            <a href="catalogue.html" class="nav-minimal-link nav-minimal-item nav-submenu-item" data-type="jewelry">Jewelry</a>
+                            <a href="catalogue.html" class="nav-minimal-link nav-minimal-item nav-submenu-item" data-type="leather">Leather Goods</a>
+                        </div>
+                    </div>
+                    <a href="a-propos.html" class="nav-minimal-link nav-minimal-item">About</a>
+                    <a href="vendez-vos-montres.html" class="nav-minimal-link nav-minimal-item">Sell your watches</a>
+                    <a href="find-my-watch.html" class="nav-minimal-link nav-minimal-item">Source my watch</a>
+                    <a href="our-socials.html" class="nav-minimal-link nav-minimal-item">Our Socials</a>
+                </div>
+            </div>
+            <a href="catalogue.html" class="nav-minimal-link">STOCK</a>
+            <a href="contact.html" class="nav-minimal-link">CONTACT</a>
+            <div class="language-switcher">
+                <button class="lang-btn" id="langEn" data-lang="en">EN</button>
+                <button class="lang-btn" id="langFr" data-lang="fr">FR</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- À propos Section -->
+    <section class="about" style="padding-top: 150px; background: linear-gradient(135deg, #2d0f0e 0%, #1a0807 50%, #3d1514 100%); background-image: radial-gradient(circle at 20% 50%, rgba(91, 31, 30, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(45, 15, 14, 0.4) 0%, transparent 50%), linear-gradient(135deg, #2d0f0e 0%, #1a0807 50%, #3d1514 100%); color: #f4dfba; position: relative;">
+        <div class="container">
+            <div class="about-inner">
+                <div class="about-image-wrapper">
+                    <div class="about-image-frame">
+                        <img src="nizar.jpeg"
+                             alt="Nizar Baeri"
+                             class="about-image"
+                             loading="lazy">
+                    </div>
+                </div>
+                <div class="about-content">
+                    <div class="section-label">Who I am</div>
+                    <h2 class="section-title">Nizar Baeri</h2>
+                    <p class="about-tagline">Your dream is in good hands.</p>
+                    <p class="about-text">
+                        « I have spent years perfecting the art of buying and reselling, developing a deep understanding of market trends and value assessment. With a keen eye for high-demand products and the ability to make strategic acquisitions, I help my clients and partners maximize their returns through informed resale strategies.
+                    </p>
+                    <p class="about-text">
+                        My expertise lies in identifying market opportunities and anticipating developments, which allows me to make sound, data-driven decisions. Over time, I have built a reputation based on integrity and precision, ensuring that every transaction I oversee meets the highest standards of quality and transparency.
+                    </p>
+                    <p class="about-text">
+                        Whether it's luxury products, collectible pieces, or unique high-value items, my approach is guided by a passion for excellence and a total commitment to my clients' satisfaction. I take pride in delivering results that reflect my years of experience and dedication to the art of buying and reselling. »
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Time is a Choice Section -->
+    <section class="collection" style="padding: 100px 0; position: relative !important; background: #f4dfba; color: #5d1d1b; overflow: visible !important; transform: none !important; display: block !important; z-index: 1 !important; min-height: auto !important; height: auto !important; top: auto !important; left: auto !important; right: auto !important; bottom: auto !important; width: 100% !important;">
+        <div class="container" style="position: relative; z-index: 2; max-width: 900px; margin: 0 auto; padding: 0 60px;">
+            <div class="section-header" style="text-align: center; margin-bottom: 50px;">
+                <div class="section-label" style="color: rgba(93, 29, 27, 0.6); margin-bottom: 15px;">Philosophy</div>
+                <h2 class="section-title" style="color: #5d1d1b !important; font-size: clamp(32px, 5vw, 48px); margin-bottom: 40px;">Time is a Choice</h2>
+            </div>
+            
+            <div class="collection-intro" style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <p class="collection-text" style="color: rgba(93, 29, 27, 0.9); font-size: clamp(16px, 2.5vw, 18px); line-height: 1.8; margin-bottom: 30px;">
+                    Machiavelli selects and resells prestigious watches from the finest watchmaking houses. 
+                    We do not create timepieces, we choose the most desired, rarest, and most relevant ones 
+                    for our clients, based on a deep understanding of the market and trends.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Des pièces authentiques Section -->
+    <section class="about" style="padding: 100px 0; background: linear-gradient(135deg, #2d0f0e 0%, #1a0807 50%, #3d1514 100%); background-image: radial-gradient(circle at 20% 50%, rgba(91, 31, 30, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(45, 15, 14, 0.4) 0%, transparent 50%), linear-gradient(135deg, #2d0f0e 0%, #1a0807 50%, #3d1514 100%); color: #f4dfba; position: relative;">
+        <div class="container">
+            <div class="about-content" style="max-width: 900px; margin: 0 auto; text-align: center;">
+                <div class="section-label">Authenticity</div>
+                <h2 class="section-title">Authentic Pieces</h2>
+                <p class="about-text" style="text-align: center;">
+                    All our models are authenticated by a trusted and verified expert. 
+                    This certification guarantees the authenticity and quality of each piece in our collection, 
+                    giving you peace of mind and the confidence needed to invest in horological excellence.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="aeje.jpg" alt="Machiavelli" class="footer-logo-img">
+                    </div>
+                    <p class="footer-tagline">Belgium</p>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/machiavelli_group/" target="_blank" rel="noopener noreferrer" class="social-link">Instagram</a>
+                        <a href="https://www.tiktok.com/@machiavelli_group" target="_blank" rel="noopener noreferrer" class="social-link">TikTok</a>
+                        <a href="https://api.whatsapp.com/send?phone=32484709109" target="_blank" rel="noopener noreferrer" class="social-link">WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Machiavelli</p>
+                <div class="footer-links">
+                    <a href="mentions-legales.html">Legal Notice</a>
+                    <a href="#">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
