@@ -40,7 +40,7 @@
         </div>
     </nav>
 
-    <!-- Catalogue Section -->
+    <!-- Collection Section -->
     <section id="collection" class="collection-section" style="padding: 100px 0; background: transparent; position: relative;">
         <div class="container" style="position: relative; z-index: 1;">
             <div class="section-header" style="margin-bottom: 60px;">
@@ -59,7 +59,6 @@
                         <option value="">All brands</option>
                         <option value="Rolex">Rolex</option>
                         <option value="Patek Philippe">Patek Philippe</option>
-                        <option value="Richard Mille">Richard Mille</option>
                         <option value="Cartier">Cartier</option>
                         <option value="Bulgari">Bulgari</option>
                         <option value="Omega">Omega</option>
@@ -161,7 +160,7 @@
                 <a href="montre1.html" class="watch-card" data-brand="Richard Mille">
                     <img src="1.webp" alt="Richard Mille RM011 TI" class="watch-img" loading="lazy">
                     <div class="watch-info">
-                        <h3 class="watch-name">Richard Mille RM011 TI</h3>
+                        <h3 class="watch-name">Richard Mille</h3>
                         <p class="watch-price">€ 149.000</p>
                     </div>
                 </a>
@@ -169,7 +168,7 @@
                 <a href="montre2.html" class="watch-card" data-brand="Patek Philippe">
                     <img src="2.webp" alt="Patek Philippe Annual Calendar 5726" class="watch-img" loading="lazy">
                     <div class="watch-info">
-                        <h3 class="watch-name">Patek Philippe Annual Calendar 5726</h3>
+                        <h3 class="watch-name">Patek Philippe Annual Calendar</h3>
                         <p class="watch-price">€ 135.000</p>
                     </div>
                 </a>
@@ -337,7 +336,7 @@
 <a href="montre24.html" class="watch-card" data-brand="Rolex">
                     <img src="24.webp" alt="GMT Master II Rootbeer" class="watch-img" loading="lazy">
                     <div class="watch-info">
-                        <h3 class="watch-name">GMT Master II Rootbeer</h3>
+                        <h3 class="watch-name">Datejust vintage 36</h3>
                         <p class="watch-price">€ 17.900</p>
                     </div>
                 </a>
@@ -345,7 +344,7 @@
                 <a href="montre25.html" class="watch-card" data-brand="Rolex">
                     <img src="25.webp" alt="GMT Master II Sprite" class="watch-img" loading="lazy">
                     <div class="watch-info">
-                        <h3 class="watch-name">GMT Master II Sprite</h3>
+                        <h3 class="watch-name">Datejust vintage 36</h3>
                         <p class="watch-price">€ 14.900</p>
                     </div>
                 </a>
@@ -630,17 +629,10 @@
         </div>
     </footer>
 
-    <script>
-        // S'assurer que le body peut scroller sur la page catalogue
-        document.addEventListener('DOMContentLoaded', function() {
-            document.body.style.overflow = '';
-            document.body.classList.remove('loading');
-            
-    </script>
     <script src="script.js"></script>
     <script>
         // Fonctionnalités de recherche et filtrage
-        document.addEventListener('DOMContentLoaded', function() {
+        function initCatalogueFilter() {
             const searchInput = document.getElementById('searchInput');
             const brandFilter = document.getElementById('brandFilter');
             const typeFilter = document.getElementById('typeFilter');
@@ -766,11 +758,17 @@
             
             // Initialiser le filtrage et tri
             filterAndSortWatches();
-        });
+        }
+        
+        // Initialiser quand le DOM est prêt
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCatalogueFilter);
+        } else {
+            initCatalogueFilter();
+        }
         
         // Gérer les clics sur les sous-catégories du menu
-        // Utiliser setTimeout pour s'assurer que le script s'exécute après le chargement complet
-        setTimeout(function() {
+        document.addEventListener('DOMContentLoaded', function() {
             const submenuItems = document.querySelectorAll('.nav-submenu-item[data-type]');
             
             submenuItems.forEach(item => {
@@ -784,49 +782,21 @@
                         menu.classList.remove('active');
                     }
                     
-                    // Appliquer le filtre directement sur la page catalogue
-                    const typeFilter = document.getElementById('typeFilter');
-                    if (typeFilter) {
-                        // Définir la valeur du filtre
-                        typeFilter.value = type;
-                        
-                        // Déclencher l'événement change pour appliquer le filtre
-                        // Utiliser requestAnimationFrame pour s'assurer que le DOM est prêt
-                        requestAnimationFrame(() => {
-                            const changeEvent = new Event('change', { 
-                                bubbles: true, 
-                                cancelable: true 
-                            });
-                            typeFilter.dispatchEvent(changeEvent);
-                            
-                            // Scroll vers le haut de la section collection pour voir les résultats
-                            const collectionSection = document.getElementById('collection');
-                            if (collectionSection) {
-                                collectionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                            }
-                        });
-                    }
+                    // Rediriger vers la collection et appliquer le filtre
+                    window.location.href = '#collection';
+                    
+                    // Attendre que la page soit chargée puis appliquer le filtre
+                    setTimeout(function() {
+                        const typeFilter = document.getElementById('typeFilter');
+                        if (typeFilter) {
+                            typeFilter.value = type;
+                            const event = new Event('change');
+                            typeFilter.dispatchEvent(event);
+                        }
+                    }, 500);
                 });
             });
-            
-            // Gérer aussi les paramètres d'URL (si on arrive depuis un lien avec ?type=jewelry)
-            const urlParams = new URLSearchParams(window.location.search);
-            const typeParam = urlParams.get('type');
-            if (typeParam) {
-                const typeFilter = document.getElementById('typeFilter');
-                if (typeFilter) {
-                    typeFilter.value = typeParam;
-                    // Déclencher l'événement change après un court délai pour s'assurer que tout est chargé
-                    setTimeout(() => {
-                        const changeEvent = new Event('change', { 
-                            bubbles: true, 
-                            cancelable: true 
-                        });
-                        typeFilter.dispatchEvent(changeEvent);
-                    }, 200);
-                }
-            }
-        }, 100);
+        });
     </script>
 </body>
 </html>
