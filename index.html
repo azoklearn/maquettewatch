@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machiavelli - Luxury Watchmaking</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Écran d'entrée avec image puis vidéo -->
+    <div class="door-entrance" id="doorEntrance">
+        <button class="skip-intro-button" id="skipIntroButton" title="Skip introduction">Skip</button>
+        <p class="welcome-text" id="welcomeText">Welcome to<br>Machiavelli</p>
+        <div class="door-content" id="doorContent">
+            <!-- Image initiale avec bouton ENTER -->
+            <div class="door-intro" id="doorIntro">
+                <img src="videostore.jpeg" alt="Logo" class="door-logo" id="doorLogoImage">
+                <button class="enter-button" id="enterButton">ENTER</button>
+            </div>
+            <!-- Vidéo qui se lance après le clic -->
+            <video id="storeVideo" class="store-video" muted playsinline preload="metadata" style="display: none;">
+                <source src="videostore.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <!-- Espace pour le scroll -->
+    <div class="scroll-spacer" style="height: 100vh;"></div>
+    
+    <!-- Image de fond pour toute la page -->
+    <img src="hero-video.png" alt="Hero" class="hero-video">
+
+    <!-- Navigation -->
+    <nav class="navbar-minimal">
+        <div class="nav-minimal-container">
+                <div class="nav-minimal-menu">
+                <a href="#" class="nav-minimal-link" id="menuToggle">MENU</a>
+                <div class="nav-minimal-dropdown" id="fullMenu">
+                    <button class="menu-close" id="menuClose">×</button>
+                    <a href="index.html" class="nav-minimal-link nav-minimal-item">Home</a>
+                    <div class="nav-menu-item-with-submenu">
+                        <a href="catalogue.html" class="nav-minimal-link nav-minimal-item">Catalogue</a>
+                        <div class="nav-submenu">
+                            <a href="catalogue.html" class="nav-minimal-link nav-minimal-item nav-submenu-item" data-type="watch">Watches</a>
+                            <a href="catalogue.html" class="nav-minimal-link nav-minimal-item nav-submenu-item" data-type="jewelry">Jewelry</a>
+                            <a href="catalogue.html" class="nav-minimal-link nav-minimal-item nav-submenu-item" data-type="leather">Leather Goods</a>
+                        </div>
+                    </div>
+                    <a href="a-propos.html" class="nav-minimal-link nav-minimal-item">About</a>
+                    <a href="vendez-vos-montres.html" class="nav-minimal-link nav-minimal-item">Sell your watches</a>
+                    <a href="find-my-watch.html" class="nav-minimal-link nav-minimal-item">Source my watch</a>
+                    <a href="our-socials.html" class="nav-minimal-link nav-minimal-item">Our Socials</a>
+                </div>
+            </div>
+            <a href="catalogue.html" class="nav-minimal-link">STOCK</a>
+            <a href="contact.html" class="nav-minimal-link">CONTACT</a>
+            <div class="language-switcher">
+                <button class="lang-btn" id="langEn" data-lang="en">EN</button>
+                <button class="lang-btn" id="langFr" data-lang="fr">FR</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <a href="#collection" class="hero-catalogue-button" style="margin-top: 320px; display: block; padding: 16px 24px;">OUR STOCK</a>
+            </div>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="luxury-particles" id="luxuryParticles"></div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section class="philosophy">
+        <div class="container">
+            <div class="philosophy-content">
+                <div class="section-label">Our Vision</div>
+                <h2 class="section-title">Welcome to Machiavelli</h2>
+                <p class="philosophy-text">
+                    We are your premier destination for luxury timepieces. Based in Liège, Belgium, we specialize in the trading and resale of exclusive watches, connecting collectors and enthusiasts worldwide.
+With a commitment to quality and authenticity, we curate a selection of the finest timepieces, ensuring that every purchase reflects our passion for excellence.
+                </p>
+                <div style="margin-top: 40px;">
+                    <a href="a-propos.html" class="catalogue-button">About</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Notre boutique Section -->
+    <section class="about" style="padding: 100px 0; background: #f4dfba;">
+        <div class="container">
+            <div class="about-content" style="max-width: 900px; margin: 0 auto; text-align: center; position: relative; z-index: 10;">
+                <div class="section-label" style="color: rgba(93, 29, 27, 0.6);"> Boutique</div>
+                <h2 class="section-title" style="color: #5d1d1b;">Our Store</h2>
+                <p class="about-text" style="text-align: center; color: rgba(93, 29, 27, 0.9);">
+                    We welcome you to our boutique at Passage Lemonnier in the center of Liège from Tuesday to Saturday from 10am to 6pm.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Des pièces authentiques Section -->
+    <section class="about" style="padding: 100px 0;">
+        <div class="container">
+            <div class="about-content" style="max-width: 900px; margin: 0 auto; text-align: center; position: relative; z-index: 10;">
+                <div class="section-label">Authenticity</div>
+                <h2 class="section-title">Authentic Pieces</h2>
+                <p class="about-text" style="text-align: center;">
+                    All our models are authenticated by a trusted and verified expert. 
+                    This certification guarantees the authenticity and quality of each piece in our collection, 
+                    giving you peace of mind and the confidence needed to invest in horological excellence.
+                </p>
+                <div style="margin-top: 40px; text-align: center; position: relative; z-index: 20;">
+                    <a href="vendez-vos-montres.html" class="catalogue-button" style="display: inline-block; position: relative; z-index: 20; pointer-events: auto; cursor: pointer;">Sell your watches</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collection Section -->
+    <section id="collection" class="collection-section" style="padding: 100px 0; background: transparent; position: relative;">
+        <div class="container" style="position: relative; z-index: 1;">
+            <div class="section-header" style="margin-bottom: 60px;">
+                <h2 class="section-title" style="color: #f4dfba;">All Our Watches</h2>
+            </div>
+            
+            <p style="font-family: var(--font-sans); font-size: 14px; color: rgba(244, 223, 186, 0.7); margin-top: 15px; margin-bottom: 30px; font-weight: 300; text-align: center;">Search for a specific model or let yourself be inspired by our catalog</p>
+            
+            <!-- Barre de recherche et filtre -->
+            <div class="catalogue-filters" style="margin-bottom: 50px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center;">
+                <div class="search-container" style="flex: 1; min-width: 250px; max-width: 400px;">
+                    <input type="text" id="searchInput" placeholder="Search for a watch..." style="width: 100%; padding: 12px 20px; border: 1px solid rgba(26, 26, 26, 0.2); background: rgba(255, 255, 255, 0.8); font-family: var(--font-sans); font-size: 14px; color: var(--text-dark); border-radius: 0; transition: all 0.3s ease;">
+                </div>
+                <div class="brand-filter" style="flex: 0 0 auto;">
+                    <select id="brandFilter" style="padding: 12px 20px; border: 1px solid rgba(26, 26, 26, 0.2); background: rgba(255, 255, 255, 0.8); font-family: var(--font-sans); font-size: 14px; color: var(--text-dark); border-radius: 0; cursor: pointer; min-width: 200px; transition: all 0.3s ease;">
+                        <option value="">All brands</option>
+                        <option value="Rolex">Rolex</option>
+                        <option value="Patek Philippe">Patek Philippe</option>
+                        <option value="Cartier">Cartier</option>
+                        <option value="Bulgari">Bulgari</option>
+                        <option value="Omega">Omega</option>
+                        <option value="Tudor">Tudor</option>
+                        <option value="Frank Muller">Frank Muller</option>
+                        <option value="Jaeger LeCoultre">Jaeger LeCoultre</option>
+                        <option value="Oris">Oris</option>
+                        <option value="Grand Seiko">Grand Seiko</option>
+                        <option value="Hamilton">Hamilton</option>
+                        <option value="Breitling">Breitling</option>
+                        <option value="Tag Heuer">Tag Heuer</option>
+                        <option value="Rado">Rado</option>
+                        <option value="Frederique Constant">Frederique Constant</option>
+                        <option value="Seiko">Seiko</option>
+                        <option value="Akilils">Akilils</option>
+                        <option value="Fred">Fred</option>
+                        <option value="Autre">Other</option>
+                    </select>
+                </div>
+                <div class="type-filter" style="flex: 0 0 auto;">
+                    <select id="typeFilter" style="padding: 12px 20px; border: 1px solid rgba(26, 26, 26, 0.2); background: rgba(255, 255, 255, 0.8); font-family: var(--font-sans); font-size: 14px; color: var(--text-dark); border-radius: 0; cursor: pointer; min-width: 200px; transition: all 0.3s ease;">
+                        <option value="">All types</option>
+                        <option value="watch">Watches</option>
+                        <option value="jewelry">Jewelry</option>
+                        <option value="leather">Leather Goods</option>
+                    </select>
+                </div>
+                <div class="sort-filter" style="flex: 0 0 auto;">
+                    <select id="sortFilter" style="padding: 12px 20px; border: 1px solid rgba(26, 26, 26, 0.2); background: rgba(255, 255, 255, 0.8); font-family: var(--font-sans); font-size: 14px; color: var(--text-dark); border-radius: 0; cursor: pointer; min-width: 200px; transition: all 0.3s ease;">
+                        <option value="">Sort by</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="name-asc">Name A-Z</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Bandeau Derniers Ajouts -->
+            <div class="latest-additions-banner" id="latestBanner">
+                <div class="banner-content">
+                    <div class="banner-label">Latest Additions</div>
+                    <div class="banner-watches">
+                        <div class="banner-watches-wrapper">
+                            <a href="montre56.html" class="banner-watch-item">
+                                <img src="56.webp" alt="Rolex Daytona" class="banner-watch-img">
+                                <span class="banner-watch-name">Rolex Daytona</span>
+                            </a>
+                            <a href="montre57.html" class="banner-watch-item">
+                                <img src="57.webp" alt="Rolex Daydate Olive" class="banner-watch-img">
+                                <span class="banner-watch-name">Rolex Daydate Olive</span>
+                            </a>
+                            <a href="montre58.html" class="banner-watch-item">
+                                <img src="58.webp" alt="Rolex Datejust" class="banner-watch-img">
+                                <span class="banner-watch-name">Rolex Datejust</span>
+                            </a>
+                            <a href="montre59.html" class="banner-watch-item">
+                                <img src="59.webp" alt="Rolex Skydweller" class="banner-watch-img">
+                                <span class="banner-watch-name">Rolex Skydweller</span>
+                            </a>
+                            <a href="montre60.html" class="banner-watch-item">
+                                <img src="60.webp" alt="Rolex Explorer II" class="banner-watch-img">
+                                <span class="banner-watch-name">Rolex Explorer II</span>
+                            </a>
+                            <a href="montre61.html" class="banner-watch-item">
+                                <img src="61.webp" alt="Patek Philippe" class="banner-watch-img">
+                                <span class="banner-watch-name">Patek Philippe</span>
+                            </a>
+                            <a href="montre62.html" class="banner-watch-item">
+                                <img src="62.webp" alt="Rolex Oysterdate Precision" class="banner-watch-img">
+                                <span class="banner-watch-name">Rolex Oysterdate Precision</span>
+                            </a>
+                            <a href="montre63.html" class="banner-watch-item">
+                                <img src="63.webp" alt="Rolex Deepsea" class="banner-watch-img">
+                                <span class="banner-watch-name">Rolex Deepsea</span>
+                            </a>
+                            <a href="montre64.html" class="banner-watch-item">
+                                <img src="64.webp" alt="Rolex GMT Master II Pepsi" class="banner-watch-img">
+                                <span class="banner-watch-name">Rolex GMT Master II Pepsi</span>
+                            </a>
+                            <a href="montre65.html" class="banner-watch-item">
+                                <img src="65.webp" alt="Seiko Prospex" class="banner-watch-img">
+                                <span class="banner-watch-name">Seiko Prospex</span>
+                            </a>
+                            <a href="montre66.html" class="banner-watch-item">
+                                <img src="66.webp" alt="Breitling Colt Oceane 2" class="banner-watch-img">
+                                <span class="banner-watch-name">Breitling Colt Oceane 2</span>
+                            </a>
+                            <!-- Duplication pour effet de boucle infinie -->
+                            <a href="montre56.html" class="banner-watch-item">
+                                <img src="56.webp" alt="Rolex Daytona" class="banner-watch-img">
+                                <span class="banner-watch-name">Rolex Daytona</span>
+                            </a>
+                            <a href="montre57.html" class="banner-watch-item">
+                                <img src="57.webp" alt="Rolex Daydate Olive" class="banner-watch-img">
+                                <span class="banner-watch-name">Rolex Daydate Olive</span>
+                            </a>
+                            <a href="montre58.html" class="banner-watch-item">
+                                <img src="58.webp" alt="Rolex Datejust" class="banner-watch-img">
+                                <span class="banner-watch-name">Rolex Datejust</span>
+                            </a>
+                            <a href="montre59.html" class="banner-watch-item">
+                                <img src="59.webp" alt="Rolex Skydweller" class="banner-watch-img">
+                                <span class="banner-watch-name">Rolex Skydweller</span>
+                            </a>
+                            <a href="montre60.html" class="banner-watch-item">
+                                <img src="60.webp" alt="Rolex Explorer II" class="banner-watch-img">
+                                <span class="banner-watch-name">Rolex Explorer II</span>
+                            </a>
+                            <a href="montre61.html" class="banner-watch-item">
+                                <img src="61.webp" alt="Patek Philippe" class="banner-watch-img">
+                                <span class="banner-watch-name">Patek Philippe</span>
+                            </a>
+                            <a href="montre62.html" class="banner-watch-item">
+                                <img src="62.webp" alt="Rolex Oysterdate Precision" class="banner-watch-img">
+                                <span class="banner-watch-name">Rolex Oysterdate Precision</span>
+                            </a>
+                            <a href="montre63.html" class="banner-watch-item">
+                                <img src="63.webp" alt="Rolex Deepsea" class="banner-watch-img">
+                                <span class="banner-watch-name">Rolex Deepsea</span>
+                            </a>
+                            <a href="montre64.html" class="banner-watch-item">
+                                <img src="64.webp" alt="Rolex GMT Master II Pepsi" class="banner-watch-img">
+                                <span class="banner-watch-name">Rolex GMT Master II Pepsi</span>
+                            </a>
+                            <a href="montre65.html" class="banner-watch-item">
+                                <img src="65.webp" alt="Seiko Prospex" class="banner-watch-img">
+                                <span class="banner-watch-name">Seiko Prospex</span>
+                            </a>
+                            <a href="montre66.html" class="banner-watch-item">
+                                <img src="66.webp" alt="Breitling Colt Oceane 2" class="banner-watch-img">
+                                <span class="banner-watch-name">Breitling Colt Oceane 2</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="collection-grid" id="watchGrid">
+                <a href="montre1.html" class="watch-card" data-brand="Richard Mille" id="montre1">
+                    <img src="1.webp" alt="Richard Mille RM011 TI" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Richard Mille </h3>
+                        <p class="watch-price">€ 149.000</p>
+                    </div>
+                </a>
+
+                <a href="montre2.html" class="watch-card" data-brand="Patek Philippe" id="montre2">
+                    <img src="2.webp" alt="Patek Philippe Annual Calendar 5726" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Patek Philippe Annual Calendar  </h3>
+                        <p class="watch-price">€ 135.000</p>
+                    </div>
+                </a>
+
+                <a href="montre3.html" class="watch-card" data-brand="Rolex" id="montre3">
+                    <img src="3.webp" alt="Rolex Daytona Platinum" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Rolex Daytona Platinum</h3>
+                        <p class="watch-price">€ 150.000</p>
+                    </div>
+                </a>
+
+                <a href="montre4.html" class="watch-card" data-brand="Rolex" id="montre4">
+                    <img src="4.webp" alt="Rolex Daytona John Mayer" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Rolex Daytona John Mayer</h3>
+                        <p class="watch-price">€ 70.000</p>
+                    </div>
+                </a>
+
+                <a href="montre6.html" class="watch-card" data-brand="Rolex" id="montre6">
+                    <img src="6.webp" alt="Rolex Daytona Steel" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Rolex Daytona Steel</h3>
+                        <p class="watch-price">€ 27.500</p>
+                    </div>
+                </a>
+
+                <a href="montre7.html" class="watch-card" data-brand="Rolex" id="montre7">
+                    <img src="7.webp" alt="Rolex Land-dweller" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Rolex Land-dweller</h3>
+                        <p class="watch-price">€ 30.000</p>
+                    </div>
+                </a>
+
+                <a href="montre8.html" class="watch-card" data-brand="Bulgari" id="montre8">
+                    <img src="8.webp" alt="Bulgari Serpenti" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Bulgari Serpenti</h3>
+                        <p class="watch-price">€ 23.000</p>
+                    </div>
+                </a>
+
+                <a href="montre9.html" class="watch-card" data-brand="Patek Philippe" id="montre9">
+                    <img src="9.webp" alt="Patek Philippe" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Patek Philippe</h3>
+                        <p class="watch-price">€ 95.000</p>
+                    </div>
+                </a>
+
+                <a href="montre10.html" class="watch-card" data-brand="Rolex" id="montre10">
+                    <img src="10.webp" alt="Datejust 41 Champagne" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Datejust 41 Champagne</h3>
+                        <p class="watch-price">€ 17.500</p>
+                    </div>
+                </a>
+
+                <a href="montre12.html" class="watch-card" data-brand="Frank Muller" id="montre12">
+                    <img src="12.webp" alt="Frank Muller QP" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Frank Muller QP</h3>
+                        <p class="watch-price">€ 20.000</p>
+                    </div>
+                </a>
+
+                <a href="montre13.html" class="watch-card" data-brand="Cartier" id="montre13">
+                    <img src="13.webp" alt="Cartier Santos Custom" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Cartier Santos Custom</h3>
+                        <p class="watch-price">€ 13.000</p>
+                    </div>
+                </a>
+
+                <a href="montre14.html" class="watch-card" data-brand="Cartier" id="montre14">
+                    <img src="14.webp" alt="Cartier Santos 100th anniversary" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Cartier Santos 100th anniversary</h3>
+                        <p class="watch-price">€ 15.000</p>
+                    </div>
+                </a>
+
+                <a href="montre15.html" class="watch-card" data-brand="Cartier" id="montre15">
+                    <img src="15.webp" alt="Cartier Santos M blue" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Cartier Santos M blue</h3>
+                        <p class="watch-price">€ 6.900</p>
+                    </div>
+                </a>
+
+                <a href="montre16.html" class="watch-card" data-brand="Rolex" id="montre16">
+                    <img src="16.webp" alt="Submariner no date" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Submariner no date</h3>
+                        <p class="watch-price">€ 7.900</p>
+                    </div>
+                </a>
+
+
+                <a href="montre18.html" class="watch-card" data-brand="Rolex" id="montre18">
+                    <img src="18.webp" alt="Submariner date" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Submariner date</h3>
+                        <p class="watch-price">€ 9.500</p>
+                    </div>
+                </a>
+
+                <a href="montre19.html" class="watch-card" data-brand="Tudor" id="montre19">
+                    <img src="19.webp" alt="Tudor Black Bay" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Tudor Black Bay</h3>
+                        <p class="watch-price">€ 3.000</p>
+                    </div>
+                </a>
+
+                <a href="montre20.html" class="watch-card" data-brand="Rolex" id="montre20">
+                    <img src="20.webp" alt="GMT Master Pepsi" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">GMT Master Pepsi</h3>
+                        <p class="watch-price">€ 14.000</p>
+                    </div>
+                </a>
+
+                <a href="montre21.html" class="watch-card" data-brand="Rolex" id="montre21">
+                    <img src="21.webp" alt="Datejust Azzurro" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Datejust Azzurro</h3>
+                        <p class="watch-price">€ 13.000</p>
+                    </div>
+                </a>
+                <a href="montre22.html" class="watch-card" data-brand="Rolex" id="montre22">
+                    <img src="22.webp" alt="Datejust Wimbledon" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Datejust Wimbledon</h3>
+                        <p class="watch-price">€ 15.500</p>
+                    </div>
+                </a>
+
+                <a href="montre23.html" class="watch-card" data-brand="Rolex" id="montre23">
+                    <img src="23.webp" alt="Datejust vintage 36" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Datejust vintage 36</h3>
+                        <p class="watch-price">€ 6.900</p>
+                    </div>
+                </a>
+
+                <a href="montre24.html" class="watch-card" data-brand="Rolex" id="montre24">
+                    <img src="24.webp" alt="Datejust vintage 36" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Datejust vintage 36</h3>
+                        <p class="watch-price">€ 5.900</p>
+                    </div>
+                </a>
+
+
+                <a href="montre26.html" class="watch-card" data-brand="Rolex" id="montre26">
+                    <img src="26.webp" alt="Lady Datejust vintage 31" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Lady Datejust vintage 31</h3>
+                        <p class="watch-price">€ 5.500</p>
+                    </div>
+                </a>
+
+                <a href="montre27.html" class="watch-card" data-brand="Bulgari" id="montre27">
+                    <img src="27.webp" alt="Bulgari Octo Finissimo" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Bulgari Octo Finissimo</h3>
+                        <p class="watch-price">€ 14.000</p>
+                    </div>
+                </a>
+
+                <a href="montre28.html" class="watch-card" data-brand="Breitling" id="montre28">
+                    <img src="28.webp" alt="Breitling Bentley" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Breitling Bentley</h3>
+                        <p class="watch-price">€ 4.500</p>
+                    </div>
+                </a>
+
+                <a href="montre29.html" class="watch-card" data-brand="Rolex" id="montre29">
+                    <img src="29.webp" alt="GMT Master II Rootbeer" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">GMT Master II Rootbeer</h3>
+                        <p class="watch-price">€ 17.900</p>
+                    </div>
+                </a>
+
+                <a href="montre33.html" class="watch-card" data-brand="Rolex" id="montre33">
+                    <img src="33.webp" alt="Yacht Master 40" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Yacht Master 40</h3>
+                        <p class="watch-price">€ 15.900</p>
+                    </div>
+                </a>
+
+                <a href="montre34.html" class="watch-card" data-brand="Rolex" id="montre34">
+                    <img src="34.webp" alt="Yacht Master 40" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Yacht Master 40</h3>
+                        <p class="watch-price">€ 15.900</p>
+                    </div>
+                </a>
+
+                <a href="montre35.html" class="watch-card" data-brand="Rolex" id="montre35">
+                    <img src="35.webp" alt="Yacht Master II" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Yacht Master II</h3>
+                        <p class="watch-price">€ 15.900</p>
+                    </div>
+                </a>
+
+
+                <a href="montre37.html" class="watch-card" data-brand="Rolex" id="montre37">
+                    <img src="37.webp" alt="Oyster Perpetual" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Oyster Perpetual</h3>
+                        <p class="watch-price">€ 9.900</p>
+                    </div>
+                </a>
+
+                <a href="montre38.html" class="watch-card" data-brand="Patek Philippe" id="montre38">
+                    <img src="38.webp" alt="Patek Philippe" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Patek Philippe</h3>
+                        <p class="watch-price">€ 21.500</p>
+                    </div>
+                </a>
+
+                <a href="montre39.html" class="watch-card" data-brand="Cartier" id="montre39">
+                    <img src="39.webp" alt="Cartier Tank" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Cartier Tank</h3>
+                        <p class="watch-price">€ 18.000</p>
+                    </div>
+                </a>
+
+                <a href="montre40.html" class="watch-card" data-brand="Rolex" id="montre40">
+                    <img src="40.webp" alt="Lady datejust gold 18ct" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Lady datejust gold 18ct</h3>
+                        <p class="watch-price">€ 14.000</p>
+                    </div>
+                </a>
+
+                <a href="montre41.html" class="watch-card" data-brand="Rolex" id="montre41">
+                    <img src="41.webp" alt="Lady datejust" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Lady datejust</h3>
+                        <p class="watch-price">€ 6.900</p>
+                    </div>
+                </a>
+
+                <a href="montre42.html" class="watch-card" data-brand="Jaeger LeCoultre" id="montre42">
+                    <img src="42.webp" alt="Jaeger LeCoultre gold 18ct" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Jaeger LeCoultre gold 18ct</h3>
+                        <p class="watch-price">€ 11.900</p>
+                    </div>
+                </a>
+
+                <a href="montre43.html" class="watch-card" data-brand="Breitling" id="montre43">
+                    <img src="43.webp" alt="Breitling" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Breitling</h3>
+                        <p class="watch-price">€ Price on request</p>
+                    </div>
+                </a>
+
+                <a href="montre44.html" class="watch-card" data-brand="Oris" id="montre44">
+                    <img src="44.webp" alt="Oris Big Pilot" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Oris Big Pilot</h3>
+                        <p class="watch-price">€ 3.000</p>
+                    </div>
+                </a>
+
+                <a href="montre45.html" class="watch-card" data-brand="Grand Seiko" id="montre45">
+                    <img src="45.webp" alt="Grand Seiko" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Grand Seiko</h3>
+                        <p class="watch-price">€ 5.000</p>
+                    </div>
+                </a>
+
+                <a href="montre46.html" class="watch-card" data-brand="Omega" id="montre46">
+                    <img src="46.webp" alt="Omega" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Omega</h3>
+                        <p class="watch-price">€ 3.850</p>
+                    </div>
+                </a>
+
+                <a href="montre47.html" class="watch-card" data-brand="Tag Heuer" id="montre47">
+                    <img src="47.webp" alt="Tag Heuer" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Tag Heuer</h3>
+                        <p class="watch-price">€ 2.700</p>
+                    </div>
+                </a>
+
+                <a href="montre48.html" class="watch-card" data-brand="Rado" id="montre48">
+                    <img src="48.webp" alt="Rado" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Rado</h3>
+                        <p class="watch-price">€ 800</p>
+                    </div>
+                </a>
+
+                <a href="montre49.html" class="watch-card" data-brand="Frederique Constant" id="montre49">
+                    <img src="49.webp" alt="Frederique Constant" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Frederique Constant</h3>
+                        <p class="watch-price">€ 1.200</p>
+                    </div>
+                </a>
+
+                <a href="montre50.html" class="watch-card" data-brand="Cartier" id="montre50">
+                    <img src="50.webp" alt="Cartier Bracelet Clou 19cm" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Cartier Bracelet Clou 19cm</h3>
+                        <p class="watch-price">€ 3.800</p>
+                    </div>
+                </a>
+
+                <a href="montre51.html" class="watch-card" data-brand="Cartier" id="montre51">
+                    <img src="51.webp" alt="Cartier Bracelet Clou 19cm" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Cartier Bracelet Clou 19cm</h3>
+                        <p class="watch-price">€ 5.300</p>
+                    </div>
+                </a>
+                <a href="montre52.html" class="watch-card" data-brand="Cartier" id="montre52">
+                    <img src="52.webp" alt="Cartier bracelet Love 18cm" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Cartier bracelet Love 18cm</h3>
+                        <p class="watch-price">€ 8.000</p>
+                    </div>
+                </a>
+
+                <a href="montre53.html" class="watch-card" data-brand="Cartier" id="montre53">
+                    <img src="53.webp" alt="Cartier bracelet Love 20cm" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Cartier bracelet Love 20cm</h3>
+                        <p class="watch-price">€ 7.400</p>
+                    </div>
+                </a>
+
+                <a href="montre54.html" class="watch-card" data-brand="Fred" id="montre54">
+                    <img src="54.webp" alt="Bracelet Fred" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Bracelet Fred</h3>
+                        <p class="watch-price">€ 2.960</p>
+                    </div>
+                </a>
+
+                <a href="montre55.html" class="watch-card" data-brand="Cartier" id="montre55">
+                    <img src="55.webp" alt="Cartier écrou bracelet" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Cartier écrou bracelet</h3>
+                        <p class="watch-price">€ 8.700</p>
+                    </div>
+                </a>
+
+                <a href="montre56.html" class="watch-card" data-brand="Rolex" id="montre56">
+                    <img src="56.webp" alt="Rolex Daytona" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Rolex Daytona</h3>
+                        <p class="watch-price">€ 41.900</p>
+                    </div>
+                </a>
+
+                <a href="montre57.html" class="watch-card" data-brand="Rolex" id="montre57">
+                    <img src="57.webp" alt="Rolex Daydate Olive" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Rolex Daydate Olive</h3>
+                        <p class="watch-price">€ 44.900</p>
+                    </div>
+                </a>
+
+                <a href="montre58.html" class="watch-card" data-brand="Rolex" id="montre58">
+                    <img src="58.webp" alt="Rolex Datejust" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Rolex Datejust</h3>
+                        <p class="watch-price">€ 12.500</p>
+                    </div>
+                </a>
+
+                <a href="montre59.html" class="watch-card" data-brand="Rolex" id="montre59">
+                    <img src="59.webp" alt="Rolex Skydweller" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Rolex Skydweller</h3>
+                        <p class="watch-price">€ 22.500</p>
+                    </div>
+                </a>
+
+                <a href="montre60.html" class="watch-card" data-brand="Rolex" id="montre60">
+                    <img src="60.webp" alt="Rolex Explorer II" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Rolex Explorer II</h3>
+                        <p class="watch-price">€ 9.900</p>
+                    </div>
+                </a>
+
+                <a href="montre61.html" class="watch-card" data-brand="Patek Philippe" id="montre61">
+                    <img src="61.webp" alt="Patek Philippe" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Patek Philippe</h3>
+                        <p class="watch-price">€ 100.000</p>
+                    </div>
+                </a>
+
+                <a href="montre62.html" class="watch-card" data-brand="Rolex" id="montre62">
+                    <img src="62.webp" alt="Rolex Oysterdate Precision" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Rolex Oysterdate Precision</h3>
+                        <p class="watch-price">€ 3.900</p>
+                    </div>
+                </a>
+
+                <a href="montre63.html" class="watch-card" data-brand="Rolex" id="montre63">
+                    <img src="63.webp" alt="Rolex Deepsea" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Rolex Deepsea</h3>
+                        <p class="watch-price">€ 14.900</p>
+                    </div>
+                </a>
+
+                <a href="montre64.html" class="watch-card" data-brand="Rolex" id="montre64">
+                    <img src="64.webp" alt="Rolex GMT Master II Pepsi" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Rolex GMT Master II Pepsi</h3>
+                        <p class="watch-price">€ 21.500</p>
+                    </div>
+                </a>
+
+                <a href="montre65.html" class="watch-card" data-brand="Seiko" id="montre65">
+                    <img src="65.webp" alt="Seiko Prospex" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Seiko Prospex</h3>
+                        <p class="watch-price">€ 600</p>
+                    </div>
+                </a>
+
+                <a href="montre66.html" class="watch-card" data-brand="Breitling" id="montre66">
+                    <img src="66.webp" alt="Breitling Colt Oceane 2" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">Breitling Colt Oceane 2</h3>
+                        <p class="watch-price">€ 2.500</p>
+                    </div>
+                </a>
+
+</div>
+
+            <!-- Bouton Find my watch -->
+            <div style="text-align: center; margin-top: 60px;">
+                <a href="find-my-watch.html" class="catalogue-button" style="display: inline-block;">
+                    Source my watch
+                </a>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Témoignages</div>
+                <h2 class="section-title">Ce qu'ils disent de nous</h2>
+            </div>
+            
+            <div class="testimonials-slider">
+                <div class="testimonial-card active">
+                    <div class="stars">★★★★★</div>
+                    <p class="testimonial-text">"Machiavelli m'a aidé à trouver la montre parfaite pour ma collection. Leur expertise du marché et leur sélection rigoureuse m'ont permis d'acquérir une pièce authentique et d'exception."</p>
+                    <div class="testimonial-author">
+                        <p class="author-name">Alexandre Dubois</p>
+                        <p class="author-title">Collectionneur</p>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="testimonial-text">"Service irréprochable et transparence totale. Chaque montre est vérifiée et authentifiée. Un partenaire de confiance pour mes acquisitions horlogères."</p>
+                    <div class="testimonial-author">
+                        <p class="author-name">Sophie Laurent</p>
+                        <p class="author-title">Entrepreneure</p>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="testimonial-text">"Grâce à leur connaissance approfondie du marché, j'ai pu investir dans des montres qui ont pris de la valeur. Leur accompagnement personnalisé est remarquable."</p>
+                    <div class="testimonial-author">
+                        <p class="author-name">Jean-Marc Villeneuve</p>
+                        <p class="author-title">Consultant</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slider-controls">
+                <button class="slider-btn prev" id="prevBtn">←</button>
+                <div class="slider-dots" id="sliderDots"></div>
+                <button class="slider-btn next" id="nextBtn">→</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="aeje.jpg" alt="Machiavelli" class="footer-logo-img">
+                    </div>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/machiavelli_group/" target="_blank" rel="noopener noreferrer" class="social-link">Instagram</a>
+                        <a href="https://www.tiktok.com/@machiavelli_group" target="_blank" rel="noopener noreferrer" class="social-link">TikTok</a>
+                        <a href="https://api.whatsapp.com/send?phone=32484709109" target="_blank" rel="noopener noreferrer" class="social-link">WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Machiavelli</p>
+                <div class="footer-links">
+                    <a href="mentions-legales.html">Legal Notice</a>
+                    <a href="#">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Fonctionnalités de recherche et filtrage
+        function initCatalogueFilter() {
+            const searchInput = document.getElementById('searchInput');
+            const brandFilter = document.getElementById('brandFilter');
+            const typeFilter = document.getElementById('typeFilter');
+            const sortFilter = document.getElementById('sortFilter');
+            const watchGrid = document.getElementById('watchGrid');
+            
+            if (!searchInput || !brandFilter || !watchGrid) {
+                console.log('Éléments de recherche non trouvés');
+                return;
+            }
+            
+            // Récupérer les cartes depuis le conteneur watchGrid
+            let watchCards = Array.from(watchGrid.querySelectorAll('.watch-card'));
+            
+            if (watchCards.length === 0) {
+                console.log('Aucune carte de montre trouvée');
+                return;
+            }
+            
+            // Fonction pour extraire le prix d'une carte
+            function getPrice(card) {
+                const priceElement = card.querySelector('.watch-price');
+                if (!priceElement) return 0;
+                
+                const priceText = priceElement.textContent;
+                // Extraire les chiffres et points, remplacer les espaces
+                const priceMatch = priceText.match(/[\d\s.]+/);
+                if (!priceMatch) return 0;
+                
+                const priceStr = priceMatch[0].replace(/\s/g, '').replace(/\./g, '');
+                return parseInt(priceStr) || 0;
+            }
+            
+            // Fonction pour obtenir le nom d'une carte
+            function getName(card) {
+                const nameElement = card.querySelector('.watch-name');
+                return nameElement ? nameElement.textContent.trim() : '';
+            }
+            
+            // Fonction pour déterminer le type (montre ou bijou)
+            function getType(card) {
+                const name = getName(card).toLowerCase();
+                if (name.includes('bracelet') || name.includes('necklace') || name.includes('collier') || name.includes('écrou')) {
+                    return 'jewelry';
+                }
+                if (name.includes('sac') || name.includes('bag') || name.includes('portefeuille') || name.includes('wallet') || name.includes('maroquinerie') || name.includes('leather')) {
+                    return 'leather';
+                }
+                return 'watch';
+            }
+            
+            // Fonction pour trier les cartes
+            function sortWatches(cards, sortType) {
+                if (!sortType) return cards;
+                
+                const sortedCards = [...cards];
+                
+                switch(sortType) {
+                    case 'price-asc':
+                        sortedCards.sort((a, b) => getPrice(a) - getPrice(b));
+                        break;
+                    case 'price-desc':
+                        sortedCards.sort((a, b) => getPrice(b) - getPrice(a));
+                        break;
+                    case 'name-asc':
+                        sortedCards.sort((a, b) => {
+                            const nameA = getName(a).toLowerCase();
+                            const nameB = getName(b).toLowerCase();
+                            return nameA.localeCompare(nameB, 'fr');
+                        });
+                        break;
+                }
+                
+                return sortedCards;
+            }
+            
+            function filterAndSortWatches() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                const selectedBrand = brandFilter.value;
+                const selectedType = typeFilter ? typeFilter.value : '';
+                const sortType = sortFilter ? sortFilter.value : '';
+                
+                // Filtrer les cartes
+                let visibleCards = watchCards.filter(card => {
+                    const watchNameElement = card.querySelector('.watch-name');
+                    if (!watchNameElement) {
+                        return false;
+                    }
+                    
+                    const watchName = watchNameElement.textContent.toLowerCase();
+                    const watchBrand = card.getAttribute('data-brand') || '';
+                    const cardType = getType(card);
+                    
+                    const matchesSearch = searchTerm === '' || watchName.includes(searchTerm);
+                    const matchesBrand = selectedBrand === '' || watchBrand === selectedBrand;
+                    const matchesType = selectedType === '' || cardType === selectedType;
+                    
+                    return matchesSearch && matchesBrand && matchesType;
+                });
+                
+                // Trier les cartes visibles
+                const sortedCards = sortWatches(visibleCards, sortType);
+                
+                // Réorganiser les cartes dans le DOM
+                sortedCards.forEach(card => {
+                    watchGrid.appendChild(card);
+                    card.style.display = '';
+                });
+                
+                // Masquer les cartes non visibles
+                watchCards.forEach(card => {
+                    if (!visibleCards.includes(card)) {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Événements
+            searchInput.addEventListener('input', filterAndSortWatches);
+            brandFilter.addEventListener('change', filterAndSortWatches);
+            if (typeFilter) {
+                typeFilter.addEventListener('change', filterAndSortWatches);
+            }
+            if (sortFilter) {
+                sortFilter.addEventListener('change', filterAndSortWatches);
+            }
+            
+            // Initialiser le filtrage et tri
+            filterAndSortWatches();
+        }
+        
+        // Initialiser quand le DOM est prêt
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCatalogueFilter);
+        } else {
+            initCatalogueFilter();
+        }
+        
+        // Gérer les clics sur les sous-catégories du menu
+        document.addEventListener('DOMContentLoaded', function() {
+            const submenuItems = document.querySelectorAll('.nav-submenu-item[data-type]');
+            
+            submenuItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const type = this.getAttribute('data-type');
+                    
+                    // Fermer le menu
+                    const menu = document.getElementById('fullMenu');
+                    if (menu) {
+                        menu.classList.remove('active');
+                    }
+                    
+                    // Rediriger vers la collection et appliquer le filtre
+                    window.location.href = '#collection';
+                    
+                    // Attendre que la page soit chargée puis appliquer le filtre
+                    setTimeout(function() {
+                        const typeFilter = document.getElementById('typeFilter');
+                        if (typeFilter) {
+                            typeFilter.value = type;
+                            const event = new Event('change');
+                            typeFilter.dispatchEvent(event);
+                        }
+                    }, 500);
+                });
+            });
+        });
+        
+        // Fonction pour scroller vers une montre spécifique depuis le hash de l'URL
+        function scrollToWatchFromHash() {
+            const hash = window.location.hash;
+            if (hash && hash.startsWith('#montre')) {
+                const watchId = hash.substring(1); // Enlever le #
+                const watchCard = document.getElementById(watchId);
+                
+                if (watchCard) {
+                    // Attendre que le filtrage soit terminé
+                    setTimeout(function() {
+                        // Vérifier que la carte est visible
+                        if (watchCard.style.display !== 'none') {
+                            // Scroller vers la carte avec un offset pour la navigation
+                            const offset = 100; // Ajuster selon la hauteur de votre navigation
+                            const cardPosition = watchCard.getBoundingClientRect().top + window.pageYOffset;
+                            window.scrollTo({
+                                top: cardPosition - offset,
+                                behavior: 'smooth'
+                            });
+                            
+                            // Optionnel: ajouter un effet visuel (highlight)
+                            watchCard.style.transition = 'box-shadow 0.3s ease';
+                            watchCard.style.boxShadow = '0 0 20px rgba(244, 223, 186, 0.6)';
+                            setTimeout(function() {
+                                watchCard.style.boxShadow = '';
+                            }, 2000);
+                        }
+                    }, 300);
+                }
+            }
+        }
+        
+        // Appeler la fonction au chargement de la page
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(scrollToWatchFromHash, 500);
+            });
+        } else {
+            setTimeout(scrollToWatchFromHash, 500);
+        }
+        
+        // Écouter les changements de hash (si l'utilisateur utilise les boutons précédent/suivant du navigateur)
+        window.addEventListener('hashchange', scrollToWatchFromHash);
+    </script>
+</body>
+</html>
+
