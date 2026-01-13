@@ -885,9 +885,13 @@ With a commitment to quality and authenticity, we curate a selection of the fine
             
             // Fonction pour trier les cartes
             function sortWatches(cards, sortType) {
-                if (!sortType) return cards;
-                
                 const sortedCards = [...cards];
+                
+                // Par défaut, trier par prix décroissant (plus chères en premier)
+                if (!sortType) {
+                    sortedCards.sort((a, b) => getPrice(b) - getPrice(a));
+                    return sortedCards;
+                }
                 
                 switch(sortType) {
                     case 'price-asc':
