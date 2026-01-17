@@ -276,7 +276,7 @@ With a commitment to quality and authenticity, we curate a selection of the fine
                     <img src="wayne.webp" alt="Rolex GMT Master II Bruce Wayne" class="watch-img" loading="lazy">
                     <div class="watch-info">
                         <h3 class="watch-name">Rolex GMT Master II Bruce Wayne</h3>
-                        <p class="watch-price">€ 18.000</p>
+                        <p class="watch-price" data-price="reserved">Reserved</p>
                     </div>
                 </a>
 
@@ -549,7 +549,7 @@ With a commitment to quality and authenticity, we curate a selection of the fine
                     <img src="43.webp" alt="Breitling" class="watch-img" loading="lazy">
                     <div class="watch-info">
                         <h3 class="watch-name">Breitling</h3>
-                        <p class="watch-price" data-price="reserved">Reserved</p>
+                        <p class="watch-price">€ Price on request</p>
                     </div>
                 </a>
 
@@ -652,7 +652,7 @@ With a commitment to quality and authenticity, we curate a selection of the fine
                     <img src="57.webp" alt="Rolex Daydate Olive" class="watch-img" loading="lazy">
                     <div class="watch-info">
                         <h3 class="watch-name">Rolex Daydate Olive</h3>
-                        <p class="watch-price">€ 44.900</p>
+                        <p class="watch-price" data-price="reserved">Reserved</p>
                     </div>
                 </a>
 
@@ -668,7 +668,7 @@ With a commitment to quality and authenticity, we curate a selection of the fine
                     <img src="59.webp" alt="Rolex Skydweller" class="watch-img" loading="lazy">
                     <div class="watch-info">
                         <h3 class="watch-name">Rolex Skydweller</h3>
-                        <p class="watch-price">€ 22.500</p>
+                        <p class="watch-price" data-price="reserved">Reserved</p>
                     </div>
                 </a>
 
@@ -684,7 +684,7 @@ With a commitment to quality and authenticity, we curate a selection of the fine
                     <img src="61.webp" alt="Patek Philippe" class="watch-img" loading="lazy">
                     <div class="watch-info">
                         <h3 class="watch-name">Patek Philippe</h3>
-                        <p class="watch-price">€ 100.000</p>
+                        <p class="watch-price" data-price="reserved">Reserved</p>
                     </div>
                 </a>
 
@@ -823,7 +823,13 @@ With a commitment to quality and authenticity, we curate a selection of the fine
                 const priceElement = card.querySelector('.watch-price');
                 if (!priceElement) return 0;
                 
-                const priceText = priceElement.textContent;
+                const priceText = priceElement.textContent.trim();
+                // Vérifier si c'est "Reserved", "Réservé" ou "Price on request"
+                const lowerText = priceText.toLowerCase();
+                if (lowerText === 'reserved' || lowerText === 'réservé' || lowerText.includes('price on request')) {
+                    return Infinity; // Retourner une valeur très élevée pour les montres réservées
+                }
+                
                 // Extraire les chiffres et points, remplacer les espaces
                 const priceMatch = priceText.match(/[\d\s.]+/);
                 if (!priceMatch) return 0;
