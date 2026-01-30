@@ -763,8 +763,7 @@ console.log('🕐 Machiavelli - L\'Art du Temps - Site chargé avec succès');
 // Toujours commencer en haut de la page
 window.scrollTo({ top: 0, behavior: 'instant' });
 
-document.body.classList.add('loading');
-
+// Intro masquée par défaut (conformité Better Ads) — pas de loading au chargement
 function hideEntrance() {
     const doorEntrance = document.getElementById('doorEntrance');
     
@@ -788,15 +787,44 @@ function hideEntrance() {
     }, 100);
 }
 
+// Afficher l'intro (au clic sur "Watch intro")
+function showEntrance() {
+    const doorEntrance = document.getElementById('doorEntrance');
+    const doorIntro = document.getElementById('doorIntro');
+    const storeVideo = document.getElementById('storeVideo');
+    const welcomeText = document.getElementById('welcomeText');
+    const doorLogoImage = document.getElementById('doorLogoImage');
+    if (doorEntrance) {
+        doorEntrance.classList.remove('hidden');
+        document.body.classList.add('loading');
+        window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+    if (doorIntro) doorIntro.style.display = '';
+    if (storeVideo) {
+        storeVideo.style.display = 'none';
+        storeVideo.pause();
+        storeVideo.currentTime = 0;
+    }
+    if (welcomeText) welcomeText.style.opacity = '1';
+    if (doorLogoImage) doorLogoImage.classList.remove('no-blur');
+}
+
 window.addEventListener('load', () => {
-    // Toujours commencer en haut de la page
     window.scrollTo({ top: 0, behavior: 'instant' });
-    
+    document.body.classList.remove('loading');
+
+    const watchIntroBtn = document.getElementById('watchIntroButton');
+    if (watchIntroBtn) {
+        watchIntroBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showEntrance();
+        });
+    }
+
     const storeVideo = document.getElementById('storeVideo');
     const doorEntrance = document.getElementById('doorEntrance');
     
     if (doorEntrance) {
-        // Event delegation for skip button - works even if button text changes
         doorEntrance.addEventListener('click', (e) => {
             const skipButton = e.target.closest('#skipIntroButton');
             if (skipButton) {
@@ -806,7 +834,6 @@ window.addEventListener('load', () => {
             }
         });
         
-        // Event delegation for enter button - works even if button text changes
         doorEntrance.addEventListener('click', (e) => {
             const enterBtn = e.target.closest('#enterButton');
             if (enterBtn) {
@@ -816,9 +843,7 @@ window.addEventListener('load', () => {
                 const welcomeText = document.getElementById('welcomeText');
                 const doorIntro = document.getElementById('doorIntro');
                 
-                if (welcomeText) {
-                    welcomeText.style.opacity = '0';
-                }
+                if (welcomeText) welcomeText.style.opacity = '0';
                 
                 if (doorLogoImage) {
                     doorLogoImage.classList.add('no-blur');
@@ -844,90 +869,19 @@ window.addEventListener('load', () => {
     
     if (storeVideo) {
         storeVideo.load();
-        storeVideo.addEventListener('ended', () => {
-            hideEntrance();
-        });
-        storeVideo.addEventListener('error', () => {
-            hideEntrance();
-        });
-    } else if (doorEntrance) {
-        setTimeout(() => {
-            hideEntrance();
-        }, 500);
-    } else {
-        document.body.classList.remove('loading');
+        storeVideo.addEventListener('ended', hideEntrance);
+        storeVideo.addEventListener('error', hideEntrance);
     }
 });
 
-// Si la page est déjà chargée - utiliser la même délégation d'événements
 if (document.readyState === 'complete') {
-    // Toujours commencer en haut de la page
-    window.scrollTo({ top: 0, behavior: 'instant' });
-    
-    const storeVideo = document.getElementById('storeVideo');
-    const doorEntrance = document.getElementById('doorEntrance');
-    const doorIntro = document.getElementById('doorIntro');
-    
-    if (doorEntrance) {
-        // Event delegation for skip button - works even if button text changes
-        doorEntrance.addEventListener('click', (e) => {
-            const skipButton = e.target.closest('#skipIntroButton');
-            if (skipButton) {
-                e.preventDefault();
-                e.stopPropagation();
-                hideEntrance();
-            }
+    document.body.classList.remove('loading');
+    const watchIntroBtn = document.getElementById('watchIntroButton');
+    if (watchIntroBtn) {
+        watchIntroBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showEntrance();
         });
-        
-        // Event delegation for enter button - works even if button text changes
-        doorEntrance.addEventListener('click', (e) => {
-            const enterBtn = e.target.closest('#enterButton');
-            if (enterBtn) {
-                e.preventDefault();
-                e.stopPropagation();
-                const doorLogoImage = document.getElementById('doorLogoImage');
-                const welcomeText = document.getElementById('welcomeText');
-                
-                if (welcomeText) {
-                    welcomeText.style.opacity = '0';
-                }
-                
-                if (doorLogoImage) {
-                    doorLogoImage.classList.add('no-blur');
-                    setTimeout(() => {
-                        if (doorIntro) doorIntro.style.display = 'none';
-                        if (storeVideo) {
-                            storeVideo.style.display = 'block';
-                            storeVideo.playbackRate = 1.5;
-                            storeVideo.play();
-                        }
-                    }, 500);
-                } else {
-                    if (doorIntro) doorIntro.style.display = 'none';
-                    if (storeVideo) {
-                        storeVideo.style.display = 'block';
-                        storeVideo.playbackRate = 1.5;
-                        storeVideo.play();
-                    }
-                }
-            }
-        });
-    }
-    
-    if (storeVideo) {
-        storeVideo.load();
-        storeVideo.addEventListener('ended', () => {
-            hideEntrance();
-        });
-        storeVideo.addEventListener('error', () => {
-            hideEntrance();
-        });
-    } else if (doorEntrance) {
-        setTimeout(() => {
-            hideEntrance();
-        }, 500);
-    } else {
-        document.body.classList.remove('loading');
     }
 }
 
@@ -956,6 +910,7 @@ const translations = {
         'Skip': 'Passer',
         'Welcome to': 'Bienvenue chez',
         'ENTER': 'ENTRER',
+        'WATCH INTRO': 'VOIR L\'INTRO',
         // Hero
         'OUR STOCK': 'NOTRE STOCK',
         // Philosophy
