@@ -763,8 +763,7 @@ console.log('🕐 Machiavelli - L\'Art du Temps - Site chargé avec succès');
 // Toujours commencer en haut de la page
 window.scrollTo({ top: 0, behavior: 'instant' });
 
-document.body.classList.add('loading');
-
+// Ne pas bloquer la page au chargement (conformité Chrome - pas d'interstitial intrusif)
 function hideEntrance() {
     const doorEntrance = document.getElementById('doorEntrance');
     
@@ -788,12 +787,39 @@ function hideEntrance() {
     }, 100);
 }
 
+function showEntrance() {
+    const doorEntrance = document.getElementById('doorEntrance');
+    const doorIntro = document.getElementById('doorIntro');
+    const storeVideo = document.getElementById('storeVideo');
+    const welcomeText = document.getElementById('welcomeText');
+    if (!doorEntrance) return;
+    doorEntrance.classList.remove('hidden');
+    document.body.classList.add('loading');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    if (doorIntro) doorIntro.style.display = '';
+    if (storeVideo) { storeVideo.style.display = 'none'; storeVideo.pause(); }
+    if (welcomeText) welcomeText.style.opacity = '1';
+}
+
 window.addEventListener('load', () => {
     // Toujours commencer en haut de la page
     window.scrollTo({ top: 0, behavior: 'instant' });
     
     const storeVideo = document.getElementById('storeVideo');
     const doorEntrance = document.getElementById('doorEntrance');
+    
+    // Si l'intro est cachée par défaut, ne pas bloquer la page
+    if (doorEntrance && doorEntrance.classList.contains('hidden')) {
+        document.body.classList.remove('loading');
+    }
+    
+    const watchIntroBtn = document.getElementById('watchIntroButton');
+    if (watchIntroBtn) {
+        watchIntroBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showEntrance();
+        });
+    }
     
     if (doorEntrance) {
         // Event delegation for skip button - works even if button text changes
@@ -867,6 +893,18 @@ if (document.readyState === 'complete') {
     const storeVideo = document.getElementById('storeVideo');
     const doorEntrance = document.getElementById('doorEntrance');
     const doorIntro = document.getElementById('doorIntro');
+    
+    if (doorEntrance && doorEntrance.classList.contains('hidden')) {
+        document.body.classList.remove('loading');
+    }
+    
+    const watchIntroBtn = document.getElementById('watchIntroButton');
+    if (watchIntroBtn) {
+        watchIntroBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showEntrance();
+        });
+    }
     
     if (doorEntrance) {
         // Event delegation for skip button - works even if button text changes
