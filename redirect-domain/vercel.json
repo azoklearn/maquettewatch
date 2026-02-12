@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "https://maquettewatch.vercel.app/",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "destination": "https://maquettewatch.vercel.app/:path*",
+      "permanent": true
+    }
+  ]
+}
