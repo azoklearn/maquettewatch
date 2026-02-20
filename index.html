@@ -933,7 +933,12 @@ With a commitment to quality and authenticity, we curate a selection of the fine
                 });
                 
                 // Trier les cartes visibles
-                const sortedCards = sortWatches(visibleCards, sortType);
+                let sortedCards = sortWatches(visibleCards, sortType);
+                // Toujours mettre la Daytona Beach NOT FOR SALE (montre110) en première position
+                const firstCard = document.getElementById('montre110');
+                if (firstCard && sortedCards.includes(firstCard)) {
+                    sortedCards = [firstCard, ...sortedCards.filter(c => c.id !== 'montre110')];
+                }
                 
                 // Réorganiser les cartes dans le DOM
                 sortedCards.forEach(card => {
