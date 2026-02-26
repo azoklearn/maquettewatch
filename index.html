@@ -904,10 +904,12 @@ With a commitment to quality and authenticity, we curate a selection of the fine
                     }
                     
                     const watchName = watchNameElement.textContent.toLowerCase();
+                    const watchReferenceElement = card.querySelector('.watch-reference');
+                    const watchReference = watchReferenceElement ? watchReferenceElement.textContent.toLowerCase().trim() : '';
                     const watchBrand = card.getAttribute('data-brand') || '';
                     const cardType = getType(card);
                     
-                    const matchesSearch = searchTerm === '' || watchName.includes(searchTerm);
+                    const matchesSearch = searchTerm === '' || watchName.includes(searchTerm) || watchReference.includes(searchTerm);
                     const matchesBrand = selectedBrand === '' || watchBrand === selectedBrand;
                     const matchesType = selectedType === '' || cardType === selectedType;
                     
