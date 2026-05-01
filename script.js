@@ -1081,6 +1081,7 @@ const translations = {
         'Good': 'Bon',
         'Fair': 'Correct',
         'Reserved': 'Réservé',
+        'Price on request': 'Sur demande',
         // Richard Mille RM011 TI description
         'The Richard Mille RM011 TI represents the pinnacle of high-end watchmaking innovation. This exceptional timepiece combines cutting-edge technology with avant-garde design, embodying the brand\'s philosophy of pushing boundaries.': 'La Richard Mille RM011 TI représente le summum de l\'innovation horlogère haut de gamme. Cette pièce exceptionnelle allie technologie de pointe et design avant-gardiste, incarnant la philosophie de la marque qui repousse les limites.',
         'The titanium case ensures exceptional lightness and durability, while the sophisticated chronograph movement delivers remarkable precision. A true collector\'s piece that stands out for its technical excellence and distinctive aesthetic.': 'Le boîtier en titane assure une légèreté et une durabilité exceptionnelles, tandis que le mouvement chronographe sophistiqué offre une précision remarquable. Une véritable pièce de collection qui se distingue par son excellence technique et son esthétique distinctive.',
