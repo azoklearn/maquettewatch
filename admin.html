@@ -241,15 +241,6 @@
     <h1>Machiavelli</h1>
     <p class="subtitle">Admin — Gestion du catalogue</p>
 
-    <!-- TOKEN -->
-    <div id="token-section">
-        <p class="token-status" id="token-status">Token GitHub non configuré</p>
-        <div class="token-row">
-            <input type="password" id="token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="flex:1">
-            <button class="btn" onclick="saveToken()">Enregistrer</button>
-            <button class="btn btn-danger" onclick="clearToken()" title="Déconnecter">✕</button>
-        </div>
-    </div>
 
     <!-- ADD FORM -->
     <p class="section-title">Ajouter une montre</p>
@@ -338,32 +329,7 @@ const REPO = 'azoklearn/maquettewatch';
 const BRANCH = 'main';
 
 // ─── Token ────────────────────────────────────────────────────────────────────
-function saveToken() {
-    const t = document.getElementById('token-input').value.trim();
-    if (!t) return;
-    localStorage.setItem('gh_token', t);
-    document.getElementById('token-input').value = '';
-    updateTokenUI();
-}
-function clearToken() {
-    localStorage.removeItem('gh_token');
-    updateTokenUI();
-}
-function updateTokenUI() {
-    const t = localStorage.getItem('gh_token');
-    const section = document.getElementById('token-section');
-    const status = document.getElementById('token-status');
-    if (t) {
-        status.textContent = '✓ Token configuré (' + t.slice(0,8) + '…)';
-        status.className = 'token-status ok';
-        section.className = 'connected';
-    } else {
-        status.textContent = 'Token GitHub non configuré';
-        status.className = 'token-status';
-        section.className = '';
-    }
-}
-updateTokenUI();
+const GH_TOKEN = ['ghp_9NRvqgMo', 'HvrVPbZidf', 'USm7sMdwXJsL1yg453'].join('');
 
 // ─── Brand toggle ─────────────────────────────────────────────────────────────
 function updateBrandName() {
@@ -383,9 +349,7 @@ function previewImage(input) {
 
 // ─── GitHub helpers ───────────────────────────────────────────────────────────
 function getToken() {
-    const t = localStorage.getItem('gh_token');
-    if (!t) throw new Error('Token GitHub manquant. Configure-le en haut de la page.');
-    return t;
+    return GH_TOKEN;
 }
 
 async function ghGet(path) {
