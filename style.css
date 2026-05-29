@@ -2496,9 +2496,9 @@ body:not(.watch-detail-page) section.collection {
 
 .watch-img {
     width: 100%;
-    height: auto;
-    min-height: 200px;
-    max-height: 400px;
+    height: 280px;
+    min-height: unset;
+    max-height: unset;
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
