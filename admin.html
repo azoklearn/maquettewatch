@@ -229,9 +229,105 @@
             border-bottom: 1px solid rgba(244, 223, 186, 0.08);
         }
 
+        /* Divider */
+        .divider {
+            border: none;
+            border-top: 1px solid rgba(244, 223, 186, 0.08);
+            margin: 48px 0;
+        }
+
+        /* Catalogue grid */
+        .catalogue-wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .catalogue-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .admin-card {
+            background: rgba(244, 223, 186, 0.03);
+            border: 1px solid rgba(244, 223, 186, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+            position: relative;
+        }
+
+        .admin-card:hover { border-color: rgba(244, 223, 186, 0.25); }
+
+        .admin-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .admin-card-info {
+            padding: 12px;
+        }
+
+        .admin-card-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: #f4dfba;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .admin-card-ref {
+            font-size: 11px;
+            color: rgba(244, 223, 186, 0.45);
+            margin-bottom: 6px;
+            letter-spacing: 0.04em;
+        }
+
+        .admin-card-price {
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(244, 223, 186, 0.85);
+            margin-bottom: 10px;
+        }
+
+        .btn-delete {
+            width: 100%;
+            background: transparent;
+            border: 1px solid rgba(220, 80, 80, 0.3);
+            border-radius: 2px;
+            color: rgba(220, 130, 130, 0.8);
+            cursor: pointer;
+            font-family: 'Raleway', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            padding: 7px;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+
+        .btn-delete:hover {
+            background: rgba(220, 80, 80, 0.08);
+            border-color: rgba(220, 80, 80, 0.6);
+            color: rgba(255, 150, 150, 0.9);
+        }
+
+        .btn-delete:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        #catalogue-loading {
+            font-size: 13px;
+            color: rgba(244, 223, 186, 0.4);
+            padding: 20px 0;
+        }
+
         @media (max-width: 500px) {
             .form-grid { grid-template-columns: 1fr; }
             .form-group.full { grid-column: 1; }
+            .catalogue-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
@@ -322,6 +418,16 @@
 
     <div id="status"></div>
 
+</div>
+
+<!-- CATALOGUE SECTION -->
+<div class="catalogue-wrap" style="padding: 0 20px 60px;">
+    <hr class="divider" style="max-width:640px;margin:48px auto;">
+    <div style="max-width:640px;margin:0 auto 24px;">
+        <p class="section-title">Catalogue actuel</p>
+    </div>
+    <div id="catalogue-loading">Chargement du catalogue…</div>
+    <div class="catalogue-grid" id="catalogue-grid"></div>
 </div>
 
 <script>
@@ -670,7 +776,107 @@ async function addWatch() {
     }
 
     btn.disabled = false;
+
+    // Refresh catalogue after adding
+    loadCatalogue();
 }
+
+// ─── Load & render catalogue ──────────────────────────────────────────────────
+async function loadCatalogue() {
+    const grid = document.getElementById('catalogue-grid');
+    const loading = document.getElementById('catalogue-loading');
+    grid.innerHTML = '';
+    loading.style.display = 'block';
+    loading.textContent = 'Chargement du catalogue…';
+
+    try {
+        const indexData = await ghGet('index.html');
+        const content = fromBase64(indexData.content);
+
+        // Parse all watch cards
+        const cardRegex = /<a [^>]*class="watch-card"[^>]*id="([^"]+)"[^>]*>\s*<img src="([^"]+)"[^>]*>\s*<div class="watch-info">\s*<h3 class="watch-name">([^<]+)<\/h3>\s*<p class="watch-reference"[^>]*>([^<]*)<\/p>\s*<p class="watch-price">([^<]+)<\/p>/g;
+
+        const watches = [];
+        let m;
+        while ((m = cardRegex.exec(content)) !== null) {
+            watches.push({ id: m[1], img: m[2], name: m[3], ref: m[4], price: m[5] });
+        }
+
+        loading.style.display = 'none';
+
+        if (!watches.length) {
+            loading.textContent = 'Aucune montre trouvée.';
+            loading.style.display = 'block';
+            return;
+        }
+
+        watches.forEach(w => {
+            const card = document.createElement('div');
+            card.className = 'admin-card';
+            card.id = 'admin-card-' + w.id;
+            const imgUrl = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${encodeURIComponent(w.img)}`;
+            card.innerHTML = `
+                <img src="${imgUrl}" alt="${w.name}" onerror="this.style.background='rgba(244,223,186,0.05)';this.style.height='160px'">
+                <div class="admin-card-info">
+                    <div class="admin-card-name">${w.name}</div>
+                    <div class="admin-card-ref">${w.ref || '—'}</div>
+                    <div class="admin-card-price">${w.price}</div>
+                    <button class="btn-delete" onclick="deleteWatch('${w.id}', this)">Supprimer</button>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+    } catch(err) {
+        loading.textContent = 'Erreur : ' + err.message;
+        loading.style.display = 'block';
+    }
+}
+
+// ─── Delete Watch ─────────────────────────────────────────────────────────────
+async function deleteWatch(id, btn) {
+    if (!confirm(`Supprimer "${id}" ?`)) return;
+    btn.disabled = true;
+    btn.textContent = '…';
+
+    try {
+        // Read & update index.html
+        const indexData = await ghGet('index.html');
+        let indexContent = fromBase64(indexData.content);
+        const cardRegex = new RegExp(`\\s*<a [^>]*id="${id}"[^>]*>[\\s\\S]*?<\\/a>`, 'g');
+        const match = cardRegex.exec(indexContent);
+        if (!match) throw new Error(`Carte "${id}" introuvable.`);
+        const imgMatch = match[0].match(/src="([^"]+)"/);
+        const imgSrc = imgMatch ? imgMatch[1] : null;
+        const newIndex = indexContent.replace(new RegExp(`\\s*<a [^>]*id="${id}"[^>]*>[\\s\\S]*?<\\/a>`, 'g'), '');
+        await ghPut('index.html', newIndex, `Remove ${id}`, indexData.sha);
+
+        // Update catalogue.html
+        const catData = await ghGet('catalogue.html');
+        const newCat = fromBase64(catData.content).replace(new RegExp(`\\s*<a [^>]*id="${id}"[^>]*>[\\s\\S]*?<\\/a>`, 'g'), '');
+        await ghPut('catalogue.html', newCat, `Remove ${id} from catalogue`, catData.sha);
+
+        // Delete detail page
+        try { const p = await ghGet(`${id}.html`); await ghDelete(`${id}.html`, `Delete ${id}.html`, p.sha); } catch(e) {}
+
+        // Delete image
+        if (imgSrc) {
+            try { const img = await ghGet(imgSrc); await ghDelete(imgSrc, `Delete ${imgSrc}`, img.sha); } catch(e) {}
+        }
+
+        // Remove card from UI
+        const cardEl = document.getElementById('admin-card-' + id);
+        if (cardEl) cardEl.remove();
+
+    } catch(err) {
+        alert('Erreur : ' + err.message);
+        btn.disabled = false;
+        btn.textContent = 'Supprimer';
+    }
+}
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+loadCatalogue();
 
 </script>
 </body>
