@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin — Machiavelli</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: #0a0a0a;
+            color: #f4dfba;
+            font-family: 'Raleway', sans-serif;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #f4dfba;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 12px;
+            color: rgba(244, 223, 186, 0.4);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        /* Token section */
+        #token-section {
+            background: rgba(244, 223, 186, 0.04);
+            border: 1px solid rgba(244, 223, 186, 0.12);
+            border-radius: 4px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+
+        #token-section.connected {
+            border-color: rgba(100, 200, 100, 0.3);
+            background: rgba(100, 200, 100, 0.04);
+        }
+
+        .token-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .token-status {
+            font-size: 12px;
+            letter-spacing: 0.08em;
+            color: rgba(244, 223, 186, 0.5);
+            margin-bottom: 12px;
+        }
+
+        .token-status.ok { color: rgba(100, 220, 100, 0.8); }
+
+        /* Form */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full { grid-column: 1 / -1; }
+
+        label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(244, 223, 186, 0.6);
+        }
+
+        input, select, textarea {
+            background: rgba(244, 223, 186, 0.06);
+            border: 1px solid rgba(244, 223, 186, 0.15);
+            border-radius: 3px;
+            color: #f4dfba;
+            font-family: 'Raleway', sans-serif;
+            font-size: 14px;
+            font-weight: 300;
+            padding: 12px 14px;
+            width: 100%;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: rgba(244, 223, 186, 0.4);
+        }
+
+        select option {
+            background: #1a1a1a;
+            color: #f4dfba;
+        }
+
+        input[type="file"] {
+            padding: 10px 14px;
+            cursor: pointer;
+        }
+
+        input[type="file"]::file-selector-button {
+            background: rgba(244, 223, 186, 0.1);
+            border: 1px solid rgba(244, 223, 186, 0.2);
+            border-radius: 2px;
+            color: #f4dfba;
+            cursor: pointer;
+            font-family: 'Raleway', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            margin-right: 12px;
+            padding: 6px 14px;
+            text-transform: uppercase;
+            transition: background 0.2s;
+        }
+
+        input[type="file"]::file-selector-button:hover {
+            background: rgba(244, 223, 186, 0.18);
+        }
+
+        .image-preview {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 3px;
+            margin-top: 8px;
+            display: none;
+            border: 1px solid rgba(244, 223, 186, 0.1);
+        }
+
+        /* Buttons */
+        .btn {
+            background: transparent;
+            border: 1px solid rgba(244, 223, 186, 0.3);
+            border-radius: 2px;
+            color: #f4dfba;
+            cursor: pointer;
+            font-family: 'Raleway', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            padding: 12px 24px;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+
+        .btn:hover { background: rgba(244, 223, 186, 0.08); border-color: rgba(244, 223, 186, 0.5); }
+        .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        .btn-primary {
+            background: rgba(244, 223, 186, 0.1);
+            border-color: rgba(244, 223, 186, 0.5);
+            width: 100%;
+            padding: 16px;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: rgba(244, 223, 186, 0.18);
+        }
+
+        .btn-danger {
+            border-color: rgba(220, 80, 80, 0.4);
+            color: rgba(220, 150, 150, 0.9);
+        }
+
+        .btn-danger:hover { background: rgba(220, 80, 80, 0.08); border-color: rgba(220, 80, 80, 0.6); }
+
+        /* Divider */
+        .divider {
+            border: none;
+            border-top: 1px solid rgba(244, 223, 186, 0.08);
+            margin: 32px 0;
+        }
+
+        /* Status */
+        #status {
+            display: none;
+            margin-top: 24px;
+            padding: 20px;
+            border-radius: 4px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        #status.loading {
+            display: block;
+            background: rgba(244, 223, 186, 0.05);
+            border: 1px solid rgba(244, 223, 186, 0.15);
+            color: rgba(244, 223, 186, 0.7);
+        }
+
+        #status.success {
+            display: block;
+            background: rgba(100, 200, 100, 0.06);
+            border: 1px solid rgba(100, 200, 100, 0.25);
+            color: rgba(180, 255, 180, 0.9);
+        }
+
+        #status.error {
+            display: block;
+            background: rgba(220, 80, 80, 0.06);
+            border: 1px solid rgba(220, 80, 80, 0.25);
+            color: rgba(255, 160, 160, 0.9);
+        }
+
+        .step { margin: 4px 0; }
+        .step::before { content: '→ '; opacity: 0.5; }
+        .step.done::before { content: '✓ '; color: rgba(100, 220, 100, 0.8); opacity: 1; }
+        .step.active::before { content: '⋯ '; color: rgba(244, 223, 186, 0.8); opacity: 1; }
+
+        /* Section heading */
+        .section-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(244, 223, 186, 0.35);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(244, 223, 186, 0.08);
+        }
+
+        /* Delete section */
+        #delete-section {
+            margin-top: 48px;
+        }
+
+        .delete-input-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        @media (max-width: 500px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .form-group.full { grid-column: 1; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <h1>Machiavelli</h1>
+    <p class="subtitle">Admin — Gestion du catalogue</p>
+
+    <!-- TOKEN -->
+    <div id="token-section">
+        <p class="token-status" id="token-status">Token GitHub non configuré</p>
+        <div class="token-row">
+            <input type="password" id="token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="flex:1">
+            <button class="btn" onclick="saveToken()">Enregistrer</button>
+            <button class="btn btn-danger" onclick="clearToken()" title="Déconnecter">✕</button>
+        </div>
+    </div>
+
+    <!-- ADD FORM -->
+    <p class="section-title">Ajouter une montre</p>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+            <label>Marque</label>
+            <select id="brand" onchange="updateBrandName()">
+                <option value="Rolex">Rolex</option>
+                <option value="Audemars Piguet">Audemars Piguet</option>
+                <option value="Patek Philippe">Patek Philippe</option>
+                <option value="Cartier">Cartier</option>
+                <option value="Omega">Omega</option>
+                <option value="Richard Mille">Richard Mille</option>
+                <option value="Hublot">Hublot</option>
+                <option value="Tag Heuer">Tag Heuer</option>
+                <option value="Grand Seiko">Grand Seiko</option>
+                <option value="Autre">Autre</option>
+            </select>
+        </div>
+
+        <div class="form-group" id="custom-brand-group" style="display:none">
+            <label>Marque personnalisée</label>
+            <input type="text" id="custom-brand" placeholder="ex: L'Épée">
+        </div>
+
+        <div class="form-group full">
+            <label>Nom du modèle</label>
+            <input type="text" id="model-name" placeholder="ex: Datejust Diamonds">
+        </div>
+
+        <div class="form-group">
+            <label>Référence</label>
+            <input type="text" id="reference" placeholder="ex: 126234">
+        </div>
+
+        <div class="form-group">
+            <label>Date (MM/AAAA)</label>
+            <input type="text" id="date" placeholder="ex: 04/2024">
+        </div>
+
+        <div class="form-group">
+            <label>Condition</label>
+            <select id="condition">
+                <option value="New">New</option>
+                <option value="Like new">Like new</option>
+                <option value="Very good" selected>Very good</option>
+                <option value="Good">Good</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Set</label>
+            <select id="watch-set">
+                <option value="FULL SET" selected>FULL SET</option>
+                <option value="No box">No box</option>
+                <option value="No papers">No papers</option>
+                <option value="Watch only">Watch only</option>
+            </select>
+        </div>
+
+        <div class="form-group full">
+            <label>Prix (€)</label>
+            <input type="text" id="price" placeholder="ex: 11.500">
+        </div>
+
+        <div class="form-group full">
+            <label>Image</label>
+            <input type="file" id="image-file" accept="image/*" onchange="previewImage(this)">
+            <img id="image-preview" class="image-preview" alt="Aperçu">
+        </div>
+
+    </div>
+
+    <button class="btn btn-primary" id="submit-btn" onclick="addWatch()">
+        Ajouter la montre au catalogue
+    </button>
+
+    <div id="status"></div>
+
+    <!-- DELETE SECTION -->
+    <hr class="divider">
+    <div id="delete-section">
+        <p class="section-title">Supprimer une montre</p>
+        <div class="delete-input-row">
+            <input type="text" id="delete-id" placeholder="ex: 146 ou kvara" style="flex:1">
+            <button class="btn btn-danger" onclick="deleteWatch()">Supprimer</button>
+        </div>
+        <div id="delete-status"></div>
+    </div>
+
+</div>
+
+<script>
+const REPO = 'azoklearn/maquettewatch';
+const BRANCH = 'main';
+
+// ─── Token ────────────────────────────────────────────────────────────────────
+function saveToken() {
+    const t = document.getElementById('token-input').value.trim();
+    if (!t) return;
+    localStorage.setItem('gh_token', t);
+    document.getElementById('token-input').value = '';
+    updateTokenUI();
+}
+function clearToken() {
+    localStorage.removeItem('gh_token');
+    updateTokenUI();
+}
+function updateTokenUI() {
+    const t = localStorage.getItem('gh_token');
+    const section = document.getElementById('token-section');
+    const status = document.getElementById('token-status');
+    if (t) {
+        status.textContent = '✓ Token configuré (' + t.slice(0,8) + '…)';
+        status.className = 'token-status ok';
+        section.className = 'connected';
+    } else {
+        status.textContent = 'Token GitHub non configuré';
+        status.className = 'token-status';
+        section.className = '';
+    }
+}
+updateTokenUI();
+
+// ─── Brand toggle ─────────────────────────────────────────────────────────────
+function updateBrandName() {
+    const val = document.getElementById('brand').value;
+    document.getElementById('custom-brand-group').style.display = val === 'Autre' ? 'flex' : 'none';
+}
+
+// ─── Image preview ────────────────────────────────────────────────────────────
+function previewImage(input) {
+    const preview = document.getElementById('image-preview');
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => { preview.src = e.target.result; preview.style.display = 'block'; };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+// ─── GitHub helpers ───────────────────────────────────────────────────────────
+function getToken() {
+    const t = localStorage.getItem('gh_token');
+    if (!t) throw new Error('Token GitHub manquant. Configure-le en haut de la page.');
+    return t;
+}
+
+async function ghGet(path) {
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${encodeURIComponent(path)}?ref=${BRANCH}&t=${Date.now()}`, {
+        headers: { Authorization: `token ${getToken()}`, Accept: 'application/vnd.github.v3+json' }
+    });
+    if (!res.ok) throw new Error(`GitHub GET ${path}: ${res.status} ${res.statusText}`);
+    return res.json();
+}
+
+async function ghPut(path, content, message, sha = null) {
+    const body = { message, content: toBase64(content), branch: BRANCH };
+    if (sha) body.sha = sha;
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${encodeURIComponent(path)}`, {
+        method: 'PUT',
+        headers: { Authorization: `token ${getToken()}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+    });
+    if (!res.ok) { const e = await res.json(); throw new Error(`GitHub PUT ${path}: ${e.message}`); }
+    return res.json();
+}
+
+async function ghPutBinary(path, base64Content, message, sha = null) {
+    const body = { message, content: base64Content, branch: BRANCH };
+    if (sha) body.sha = sha;
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${encodeURIComponent(path)}`, {
+        method: 'PUT',
+        headers: { Authorization: `token ${getToken()}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+    });
+    if (!res.ok) { const e = await res.json(); throw new Error(`GitHub PUT binary ${path}: ${e.message}`); }
+    return res.json();
+}
+
+async function ghDelete(path, message, sha) {
+    const body = { message, sha, branch: BRANCH };
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${encodeURIComponent(path)}`, {
+        method: 'DELETE',
+        headers: { Authorization: `token ${getToken()}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+    });
+    if (!res.ok) { const e = await res.json(); throw new Error(`GitHub DELETE ${path}: ${e.message}`); }
+    return res.json();
+}
+
+function toBase64(str) {
+    return btoa(unescape(encodeURIComponent(str)));
+}
+function fromBase64(str) {
+    return decodeURIComponent(escape(atob(str.replace(/\s/g, ''))));
+}
+
+function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = e => {
+            const b64 = e.target.result.split(',')[1];
+            resolve(b64);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
+// ─── Status UI ────────────────────────────────────────────────────────────────
+let statusEl;
+function initStatus(id = 'status') {
+    statusEl = document.getElementById(id);
+    statusEl.innerHTML = '';
+    statusEl.className = 'loading';
+    statusEl.style.display = 'block';
+}
+function addStep(text, state = '') {
+    const el = document.createElement('div');
+    el.className = 'step ' + state;
+    el.textContent = text;
+    statusEl.appendChild(el);
+    return el;
+}
+function setStepDone(el) { el.className = 'step done'; }
+function setError(msg) {
+    statusEl.className = 'error';
+    statusEl.innerHTML = '<strong>Erreur :</strong> ' + msg;
+}
+function setSuccess(msg) {
+    statusEl.className = 'success';
+    statusEl.innerHTML = msg;
+}
+
+// ─── HTML generators ──────────────────────────────────────────────────────────
+function formatPrice(raw) {
+    // Accept "11500", "11.500", "11 500" → return "11.500"
+    const n = parseFloat(raw.replace(/[\s.]/g, '').replace(',', '.'));
+    if (isNaN(n)) return raw;
+    return n.toLocaleString('fr-FR').replace(/\s/g, '.').replace(',', '.');
+}
+
+function generateCard(n, brand, name, reference, price, image) {
+    return `                <a href="montre${n}.html" class="watch-card" data-brand="${brand}" id="montre${n}">
+                    <img src="${image}" alt="${name}" class="watch-img" loading="lazy">
+                    <div class="watch-info">
+                        <h3 class="watch-name">${name}</h3>
+                        <p class="watch-reference" style="font-family: var(--font-sans); font-size: 12px; color: rgba(244, 223, 186, 0.6); font-weight: 300; letter-spacing: 0.05em; margin: 4px 0;">${reference}</p>
+                        <p class="watch-price">€ ${price}</p>
+                    </div>
+                </a>`;
+}
+
+function generateDetailPage(n, brand, name, reference, date, condition, watchSet, price, image) {
+    const waTitle = encodeURIComponent(`I am interested in ${brand} ${name}\n\nhttps://machiavelliwatches.com/montre${n}.html`);
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${brand} ${name} - Machiavelli</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar-minimal">
+        <div class="nav-minimal-container">
+            <div class="nav-minimal-menu">
+                <a href="#" class="nav-minimal-link" id="menuToggle">MENU</a>
+                <div class="nav-minimal-dropdown" id="fullMenu">
+                    <button class="menu-close" id="menuClose">×</button>
+                    <a href="index.html" class="nav-minimal-link nav-minimal-item">Home</a>
+                    <div class="nav-menu-item-with-submenu">
+                        <a href="index.html#collection" class="nav-minimal-link nav-minimal-item">Catalogue</a>
+                        <div class="nav-submenu">
+                            <a href="index.html#collection" class="nav-minimal-link nav-minimal-item nav-submenu-item" data-type="watch">Watches</a>
+                            <a href="index.html#collection" class="nav-minimal-link nav-minimal-item nav-submenu-item" data-type="jewelry">Jewelry</a>
+                            <a href="index.html#collection" class="nav-minimal-link nav-minimal-item nav-submenu-item" data-type="leather">Leather Goods</a>
+                        </div>
+                    </div>
+                    <a href="a-propos.html" class="nav-minimal-link nav-minimal-item">About</a>
+                    <a href="vendez-vos-montres.html" class="nav-minimal-link nav-minimal-item">Sell your watches</a>
+                    <a href="find-my-watch.html" class="nav-minimal-link nav-minimal-item">Source my watch</a>
+                    <a href="our-socials.html" class="nav-minimal-link nav-minimal-item">Our Socials</a>
+                </div>
+            </div>
+            <a href="index.html#collection" class="nav-minimal-link">STOCK</a>
+            <a href="contact.html" class="nav-minimal-link">CONTACT</a>
+            <div class="language-switcher">
+                <button class="lang-btn" id="langEn" data-lang="en">EN</button>
+                <button class="lang-btn" id="langFr" data-lang="fr">FR</button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="watch-detail-page watch-detail-page-2">
+        <div class="container">
+            <div class="watch-detail-content">
+                <div class="watch-header">
+                    <div class="watch-brand">${brand}</div>
+                    <div class="watch-title-row">
+                        <h1 class="watch-title">${name}</h1>
+                    </div>
+                    <div class="watch-reference" style="font-family: var(--font-sans); font-size: 14px; color: rgba(244, 223, 186, 0.7); font-weight: 300; letter-spacing: 0.05em; margin-top: 8px;">${reference}</div>
+                    <div class="watch-price-in-header">
+                        <p class="watch-price-large">€ ${price}</p>
+                    </div>
+                </div>
+                <div class="watch-image-container">
+                    <img src="${image}" alt="${brand} ${name}" class="watch-img" loading="lazy">
+                </div>
+                <div class="watch-specs-grid">
+                    <div class="watch-spec-label">Reference</div>
+                    <div class="watch-spec-value">${reference}</div>
+                    <div class="watch-spec-label">Date</div>
+                    <div class="watch-spec-value">${date}</div>
+                    <div class="watch-spec-label">Condition</div>
+                    <div class="watch-spec-value">${condition}</div>
+                    <div class="watch-spec-label">Set</div>
+                    <div class="watch-spec-value">${watchSet}</div>
+                </div>
+                <div class="watch-description">
+                    <p>The ${brand} ${name} represents the perfect balance between elegance and technical excellence. This exceptional timepiece combines timeless design with exceptional performance, making it a true collector's piece.</p>
+                    <p>The certified movement ensures remarkable precision, while the refined design gives this watch a unique and prestigious character.</p>
+                </div>
+                <a href="https://api.whatsapp.com/send?phone=32484709109&text=${waTitle}" class="watch-action-button" target="_blank" rel="noopener noreferrer">I am interested</a>
+                <a href="catalogue.html#montre${n}" class="watch-action-button watch-back-button">Back to catalog</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo"><img src="aeje.jpg" alt="Machiavelli Logo" class="footer-logo-img"></div>
+                    <p class="footer-tagline">Belgium</p>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/machiavelli_group/" target="_blank" rel="noopener noreferrer" class="social-link">Instagram</a>
+                        <a href="https://www.tiktok.com/@machiavelli_group" target="_blank" rel="noopener noreferrer" class="social-link">TikTok</a>
+                        <a href="https://api.whatsapp.com/send?phone=32484709109" target="_blank" rel="noopener noreferrer" class="social-link">WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Machiavelli</p>
+                <div class="footer-links">
+                    <a href="mentions-legales.html">Mentions Légales</a>
+                    <a href="#">Confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"><\/script>
+</body>
+</html>`;
+}
+
+// ─── Insert card into HTML ────────────────────────────────────────────────────
+function insertCard(htmlContent, cardHtml) {
+    // Find the last watch-card and insert after its closing </a>
+    const lastCardMatch = [...htmlContent.matchAll(/<a [^>]*class="watch-card"[^>]*>[\s\S]*?<\/a>/g)];
+    if (!lastCardMatch.length) throw new Error('Impossible de trouver les cartes dans le fichier HTML.');
+    const last = lastCardMatch[lastCardMatch.length - 1];
+    const insertPos = last.index + last[0].length;
+    return htmlContent.slice(0, insertPos) + '\n' + cardHtml + htmlContent.slice(insertPos);
+}
+
+// ─── Find next montre number ──────────────────────────────────────────────────
+function findNextN(htmlContent) {
+    const matches = [...htmlContent.matchAll(/id="montre(\d+)"/g)];
+    if (!matches.length) return 1;
+    const nums = matches.map(m => parseInt(m[1]));
+    return Math.max(...nums) + 1;
+}
+
+// ─── Add Watch ────────────────────────────────────────────────────────────────
+async function addWatch() {
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+
+    try {
+        // Gather inputs
+        let brand = document.getElementById('brand').value;
+        if (brand === 'Autre') brand = document.getElementById('custom-brand').value.trim();
+        const name     = document.getElementById('model-name').value.trim();
+        const ref      = document.getElementById('reference').value.trim();
+        const date     = document.getElementById('date').value.trim();
+        const cond     = document.getElementById('condition').value;
+        const set      = document.getElementById('watch-set').value;
+        const priceRaw = document.getElementById('price').value.trim();
+        const imgFile  = document.getElementById('image-file').files[0];
+
+        if (!name || !priceRaw || !imgFile) {
+            alert('Remplis au minimum : nom, prix et image.');
+            btn.disabled = false;
+            return;
+        }
+
+        const price    = formatPrice(priceRaw);
+        const imgName  = imgFile.name;
+
+        initStatus();
+
+        // 1. Upload image
+        const s1 = addStep('Upload de l\'image…', 'active');
+        let imgSha = null;
+        try { const existing = await ghGet(imgName); imgSha = existing.sha; } catch(e) {}
+        const imgB64 = await fileToBase64(imgFile);
+        await ghPutBinary(imgName, imgB64, `Add image ${imgName}`, imgSha);
+        setStepDone(s1);
+
+        // 2. Read index.html
+        const s2 = addStep('Lecture de index.html…', 'active');
+        const indexData = await ghGet('index.html');
+        const indexContent = fromBase64(indexData.content);
+        const nextN = findNextN(indexContent);
+        setStepDone(s2);
+
+        // 3. Generate card
+        const cardHtml = generateCard(nextN, brand, name, ref, price, imgName);
+
+        // 4. Update index.html
+        const s3 = addStep(`Ajout de la carte (montre${nextN}) dans index.html…`, 'active');
+        const newIndex = insertCard(indexContent, cardHtml);
+        await ghPut('index.html', newIndex, `Add montre${nextN} (${brand} ${name} €${price})`, indexData.sha);
+        setStepDone(s3);
+
+        // 5. Update catalogue.html
+        const s4 = addStep('Mise à jour de catalogue.html…', 'active');
+        const catData = await ghGet('catalogue.html');
+        const catContent = fromBase64(catData.content);
+        const newCat = insertCard(catContent, cardHtml);
+        await ghPut('catalogue.html', newCat, `Add montre${nextN} to catalogue`, catData.sha);
+        setStepDone(s4);
+
+        // 6. Create detail page
+        const s5 = addStep(`Création de montre${nextN}.html…`, 'active');
+        const detailHtml = generateDetailPage(nextN, brand, name, ref, date, cond, set, price, imgName);
+        await ghPut(`montre${nextN}.html`, detailHtml, `Create montre${nextN}.html`);
+        setStepDone(s5);
+
+        setSuccess(`
+            ✓ <strong>montre${nextN}</strong> ajoutée avec succès !<br><br>
+            <strong>${brand} ${name}</strong> — Réf. ${ref} — €&nbsp;${price}<br><br>
+            <a href="https://machiavelliwatches.com/montre${nextN}.html" target="_blank" style="color: rgba(180,255,180,0.9)">
+                → Voir la page montre${nextN}.html
+            </a>
+        `);
+
+        // Reset form
+        document.getElementById('model-name').value = '';
+        document.getElementById('reference').value = '';
+        document.getElementById('date').value = '';
+        document.getElementById('price').value = '';
+        document.getElementById('image-file').value = '';
+        document.getElementById('image-preview').style.display = 'none';
+
+    } catch(err) {
+        setError(err.message);
+    }
+
+    btn.disabled = false;
+}
+
+// ─── Delete Watch ─────────────────────────────────────────────────────────────
+async function deleteWatch() {
+    const raw = document.getElementById('delete-id').value.trim();
+    if (!raw) return;
+
+    const statusEl2 = document.getElementById('delete-status');
+    statusEl2.style.cssText = 'margin-top:16px;padding:16px;border-radius:4px;font-size:13px;background:rgba(244,223,186,0.05);border:1px solid rgba(244,223,186,0.15);color:rgba(244,223,186,0.7);display:block';
+    statusEl2.textContent = '…';
+
+    const id = isNaN(raw) ? raw : `montre${raw}`;
+
+    try {
+        // Read index.html
+        const indexData = await ghGet('index.html');
+        let indexContent = fromBase64(indexData.content);
+
+        // Find card block
+        const cardRegex = new RegExp(`\\s*<a [^>]*id="${id}"[^>]*>[\\s\\S]*?<\\/a>`, 'g');
+        const match = cardRegex.exec(indexContent);
+        if (!match) throw new Error(`Carte "${id}" introuvable dans index.html.`);
+
+        // Get image src from card
+        const imgMatch = match[0].match(/src="([^"]+)"/);
+        const imgSrc = imgMatch ? imgMatch[1] : null;
+
+        // Remove card from index
+        const newIndex = indexContent.replace(cardRegex, '');
+        await ghPut('index.html', newIndex, `Remove ${id}`, indexData.sha);
+
+        // Remove card from catalogue
+        const catData = await ghGet('catalogue.html');
+        let catContent = fromBase64(catData.content);
+        const newCat = catContent.replace(new RegExp(`\\s*<a [^>]*id="${id}"[^>]*>[\\s\\S]*?<\\/a>`, 'g'), '');
+        await ghPut('catalogue.html', newCat, `Remove ${id} from catalogue`, catData.sha);
+
+        // Delete detail page
+        try {
+            const pageData = await ghGet(`${id}.html`);
+            await ghDelete(`${id}.html`, `Delete ${id}.html`, pageData.sha);
+        } catch(e) { /* page may not exist */ }
+
+        // Delete image
+        if (imgSrc) {
+            try {
+                const imgData = await ghGet(imgSrc);
+                await ghDelete(imgSrc, `Delete image ${imgSrc}`, imgData.sha);
+            } catch(e) { /* image may not exist */ }
+        }
+
+        statusEl2.style.background = 'rgba(100,200,100,0.06)';
+        statusEl2.style.borderColor = 'rgba(100,200,100,0.25)';
+        statusEl2.style.color = 'rgba(180,255,180,0.9)';
+        statusEl2.textContent = `✓ ${id} supprimée avec succès.`;
+        document.getElementById('delete-id').value = '';
+
+    } catch(err) {
+        statusEl2.style.background = 'rgba(220,80,80,0.06)';
+        statusEl2.style.borderColor = 'rgba(220,80,80,0.25)';
+        statusEl2.style.color = 'rgba(255,160,160,0.9)';
+        statusEl2.textContent = 'Erreur : ' + err.message;
+    }
+}
+</script>
+</body>
+</html>
