@@ -318,6 +318,75 @@
 
         .btn-delete:disabled { opacity: 0.4; cursor: not-allowed; }
 
+        .btn-edit {
+            width: 100%;
+            background: transparent;
+            border: 1px solid rgba(244, 223, 186, 0.25);
+            border-radius: 2px;
+            color: rgba(244, 223, 186, 0.7);
+            cursor: pointer;
+            font-family: 'Raleway', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            padding: 7px;
+            text-transform: uppercase;
+            transition: all 0.2s;
+            margin-bottom: 6px;
+        }
+
+        .btn-edit:hover {
+            background: rgba(244, 223, 186, 0.08);
+            border-color: rgba(244, 223, 186, 0.5);
+            color: rgba(244, 223, 186, 1);
+        }
+
+        .edit-mode-banner {
+            display: none;
+            background: rgba(244, 223, 186, 0.07);
+            border: 1px solid rgba(244, 223, 186, 0.3);
+            border-radius: 4px;
+            padding: 14px 18px;
+            margin-bottom: 20px;
+            font-size: 12px;
+            color: rgba(244, 223, 186, 0.8);
+            letter-spacing: 0.06em;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .edit-mode-banner.visible { display: flex; }
+
+        .btn-cancel-edit {
+            background: transparent;
+            border: 1px solid rgba(244, 223, 186, 0.3);
+            border-radius: 2px;
+            color: rgba(244, 223, 186, 0.6);
+            cursor: pointer;
+            font-family: 'Raleway', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            padding: 6px 14px;
+            text-transform: uppercase;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .btn-cancel-edit:hover {
+            background: rgba(244, 223, 186, 0.08);
+            color: rgba(244, 223, 186, 0.9);
+        }
+
+        .image-hint {
+            font-size: 11px;
+            color: rgba(244, 223, 186, 0.35);
+            margin-top: 4px;
+            letter-spacing: 0.04em;
+        }
+
         #catalogue-loading {
             font-size: 13px;
             color: rgba(244, 223, 186, 0.4);
@@ -338,8 +407,14 @@
     <p class="subtitle">Admin — Gestion du catalogue</p>
 
 
-    <!-- ADD FORM -->
-    <p class="section-title">Ajouter une montre</p>
+    <!-- EDIT MODE BANNER -->
+    <div class="edit-mode-banner" id="edit-banner">
+        <span id="edit-banner-text">Mode modification</span>
+        <button class="btn-cancel-edit" onclick="cancelEdit()">✕ Annuler</button>
+    </div>
+
+    <!-- ADD / EDIT FORM -->
+    <p class="section-title" id="form-title">Ajouter une montre</p>
 
     <div class="form-grid">
 
@@ -407,12 +482,13 @@
         <div class="form-group full">
             <label>Image</label>
             <input type="file" id="image-file" accept="image/*" onchange="previewImage(this)">
+            <p class="image-hint" id="image-hint"></p>
             <img id="image-preview" class="image-preview" alt="Aperçu">
         </div>
 
     </div>
 
-    <button class="btn btn-primary" id="submit-btn" onclick="addWatch()">
+    <button class="btn btn-primary" id="submit-btn" onclick="submitForm()">
         Ajouter la montre au catalogue
     </button>
 
@@ -436,6 +512,11 @@ const BRANCH = 'main';
 
 // ─── Token ────────────────────────────────────────────────────────────────────
 const GH_TOKEN = ['ghp_9NRvqgMo', 'HvrVPbZidf', 'USm7sMdwXJsL1yg453'].join('');
+
+// ─── Edit mode state ──────────────────────────────────────────────────────────
+let editMode = false;
+let editId = null;
+let editCurrentImg = null;
 
 // ─── Brand toggle ─────────────────────────────────────────────────────────────
 function updateBrandName() {
@@ -784,6 +865,217 @@ async function addWatch() {
     loadCatalogue();
 }
 
+// ─── Form routing ────────────────────────────────────────────────────────────
+function submitForm() {
+    if (editMode) {
+        updateWatch();
+    } else {
+        addWatch();
+    }
+}
+
+// ─── Edit Watch (load into form) ──────────────────────────────────────────────
+async function editWatch(id, currentImg) {
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    editMode = true;
+    editId = id;
+    editCurrentImg = currentImg;
+
+    // Update UI
+    document.getElementById('form-title').textContent = 'Modifier une montre';
+    document.getElementById('submit-btn').textContent = 'Enregistrer les modifications';
+    document.getElementById('edit-banner-text').textContent = `Modification de ${id}`;
+    document.getElementById('edit-banner').classList.add('visible');
+    document.getElementById('image-hint').textContent = `Image actuelle : ${currentImg} — laisser vide pour la conserver`;
+
+    // Show current image as preview
+    const imgUrl = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${encodeURIComponent(currentImg)}?t=${Date.now()}`;
+    const preview = document.getElementById('image-preview');
+    preview.src = imgUrl;
+    preview.style.display = 'block';
+
+    // Read index.html to get card data
+    try {
+        const indexData = await ghGet('index.html');
+        const content = fromBase64(indexData.content);
+
+        // Extract card data
+        const cardMatch = content.match(new RegExp(`<a [^>]*id="${id}"[^>]*data-brand="([^"]*)"[^>]*>[\\s\\S]*?<\\/a>`)) ||
+                          content.match(new RegExp(`<a [^>]*data-brand="([^"]*)"[^>]*id="${id}"[^>]*>[\\s\\S]*?<\\/a>`));
+
+        if (cardMatch) {
+            const brand = cardMatch[1];
+            const nameM = cardMatch[0].match(/<h3 class="watch-name">([^<]+)<\/h3>/);
+            const refM  = cardMatch[0].match(/watch-reference[^>]*>([^<]*)<\/p>/);
+            const priceM = cardMatch[0].match(/watch-price">€ ([^<]+)<\/p>/);
+
+            // Set brand
+            const brandSel = document.getElementById('brand');
+            const knownBrands = ['Rolex','Audemars Piguet','Patek Philippe','Cartier','Omega','Richard Mille','Hublot','Tag Heuer','Grand Seiko'];
+            if (knownBrands.includes(brand)) {
+                brandSel.value = brand;
+                document.getElementById('custom-brand-group').style.display = 'none';
+            } else {
+                brandSel.value = 'Autre';
+                document.getElementById('custom-brand-group').style.display = 'flex';
+                document.getElementById('custom-brand').value = brand;
+            }
+
+            if (nameM)  document.getElementById('model-name').value = nameM[1];
+            if (refM)   document.getElementById('reference').value = refM[1].trim();
+            if (priceM) document.getElementById('price').value = priceM[1].trim();
+        }
+
+        // Read detail page for date/condition/set
+        try {
+            const detailData = await ghGet(`${id}.html`);
+            const detail = fromBase64(detailData.content);
+
+            const dateM = detail.match(/<div class="watch-spec-label">Date<\/div>\s*<div class="watch-spec-value">([^<]+)<\/div>/);
+            const condM = detail.match(/<div class="watch-spec-label">Condition<\/div>\s*<div class="watch-spec-value">([^<]+)<\/div>/);
+            const setM  = detail.match(/<div class="watch-spec-label">Set<\/div>\s*<div class="watch-spec-value">([^<]+)<\/div>/);
+
+            if (dateM) document.getElementById('date').value = dateM[1].trim();
+            if (condM) {
+                const condSel = document.getElementById('condition');
+                condSel.value = condM[1].trim();
+            }
+            if (setM) {
+                const setSel = document.getElementById('watch-set');
+                // Try to match existing options, otherwise leave default
+                for (let opt of setSel.options) {
+                    if (opt.value === setM[1].trim()) { setSel.value = setM[1].trim(); break; }
+                }
+            }
+        } catch(e) {}
+
+    } catch(err) {
+        alert('Erreur lors du chargement : ' + err.message);
+        cancelEdit();
+    }
+}
+
+// ─── Cancel Edit ──────────────────────────────────────────────────────────────
+function cancelEdit() {
+    editMode = false;
+    editId = null;
+    editCurrentImg = null;
+
+    document.getElementById('form-title').textContent = 'Ajouter une montre';
+    document.getElementById('submit-btn').textContent = 'Ajouter la montre au catalogue';
+    document.getElementById('edit-banner').classList.remove('visible');
+    document.getElementById('image-hint').textContent = '';
+
+    // Reset form
+    document.getElementById('brand').value = 'Rolex';
+    document.getElementById('custom-brand-group').style.display = 'none';
+    document.getElementById('custom-brand').value = '';
+    document.getElementById('model-name').value = '';
+    document.getElementById('reference').value = '';
+    document.getElementById('date').value = '';
+    document.getElementById('condition').value = 'Very good';
+    document.getElementById('watch-set').value = 'FULL SET';
+    document.getElementById('price').value = '';
+    document.getElementById('image-file').value = '';
+    document.getElementById('image-preview').style.display = 'none';
+    document.getElementById('status').className = '';
+    document.getElementById('status').style.display = 'none';
+}
+
+// ─── Update Watch ─────────────────────────────────────────────────────────────
+async function updateWatch() {
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+
+    try {
+        let brand = document.getElementById('brand').value;
+        if (brand === 'Autre') brand = document.getElementById('custom-brand').value.trim();
+        const name     = document.getElementById('model-name').value.trim();
+        const ref      = document.getElementById('reference').value.trim();
+        const date     = document.getElementById('date').value.trim();
+        const cond     = document.getElementById('condition').value;
+        const set      = document.getElementById('watch-set').value;
+        const priceRaw = document.getElementById('price').value.trim();
+        const imgFile  = document.getElementById('image-file').files[0];
+
+        if (!name || !priceRaw) {
+            alert('Remplis au minimum : nom et prix.');
+            btn.disabled = false;
+            return;
+        }
+
+        const price = formatPrice(priceRaw);
+        const id    = editId;
+        const n     = parseInt(id.replace('montre', ''));
+
+        initStatus();
+
+        // 1. Handle image: upload new if provided, keep existing otherwise
+        let imgName = editCurrentImg;
+        if (imgFile) {
+            const s1 = addStep(`Upload nouvelle image…`, 'active');
+            const imgExt = imgFile.name.includes('.') ? imgFile.name.split('.').pop().toLowerCase() : 'jpeg';
+            imgName = `montre${n}.${imgExt}`;
+            let imgSha = null;
+            try { const ex = await ghGet(imgName); imgSha = ex.sha; } catch(e) {}
+            const imgB64 = await fileToBase64(imgFile);
+            await ghPutBinary(imgName, imgB64, `Update image ${imgName}`, imgSha);
+            setStepDone(s1);
+        }
+
+        const cardHtml = generateCard(n, brand, name, ref, price, imgName);
+
+        // 2. Update index.html
+        const s2 = addStep('Mise à jour de index.html…', 'active');
+        const indexData = await ghGet('index.html');
+        let indexContent = fromBase64(indexData.content);
+        indexContent = replaceCard(indexContent, id, cardHtml);
+        await ghPut('index.html', indexContent, `Update ${id} (${brand} ${name})`, indexData.sha);
+        setStepDone(s2);
+
+        // 3. Update catalogue.html
+        const s3 = addStep('Mise à jour de catalogue.html…', 'active');
+        const catData = await ghGet('catalogue.html');
+        let catContent = fromBase64(catData.content);
+        catContent = replaceCard(catContent, id, cardHtml);
+        await ghPut('catalogue.html', catContent, `Update ${id} in catalogue`, catData.sha);
+        setStepDone(s3);
+
+        // 4. Update detail page
+        const s4 = addStep(`Mise à jour de ${id}.html…`, 'active');
+        let detailSha = null;
+        try { const ex = await ghGet(`${id}.html`); detailSha = ex.sha; } catch(e) {}
+        const detailHtml = generateDetailPage(n, brand, name, ref, date, cond, set, price, imgName);
+        await ghPut(`${id}.html`, detailHtml, `Update ${id}.html`, detailSha);
+        setStepDone(s4);
+
+        setSuccess(`
+            ✓ <strong>${id}</strong> mis à jour avec succès !<br><br>
+            <strong>${brand} ${name}</strong> — Réf. ${ref} — €&nbsp;${price}<br><br>
+            <a href="https://machiavelliwatches.com/${id}.html" target="_blank" style="color: rgba(180,255,180,0.9)">
+                → Voir la page ${id}.html
+            </a>
+        `);
+
+        cancelEdit();
+        loadCatalogue();
+
+    } catch(err) {
+        setError(err.message);
+    }
+
+    btn.disabled = false;
+}
+
+// ─── Replace card in HTML ─────────────────────────────────────────────────────
+function replaceCard(htmlContent, id, newCardHtml) {
+    const regex = new RegExp(`<a [^>]*id="${id}"[^>]*>[\\s\\S]*?<\\/a>`);
+    if (!regex.test(htmlContent)) throw new Error(`Carte "${id}" introuvable dans le fichier.`);
+    return htmlContent.replace(regex, newCardHtml);
+}
+
 // ─── Load & render catalogue ──────────────────────────────────────────────────
 async function loadCatalogue() {
     const grid = document.getElementById('catalogue-grid');
@@ -817,13 +1109,14 @@ async function loadCatalogue() {
             const card = document.createElement('div');
             card.className = 'admin-card';
             card.id = 'admin-card-' + w.id;
-            const imgUrl = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${encodeURIComponent(w.img)}`;
+            const imgUrl = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${encodeURIComponent(w.img)}?t=${Date.now()}`;
             card.innerHTML = `
                 <img src="${imgUrl}" alt="${w.name}" onerror="this.style.background='rgba(244,223,186,0.05)';this.style.height='160px'">
                 <div class="admin-card-info">
                     <div class="admin-card-name">${w.name}</div>
                     <div class="admin-card-ref">${w.ref || '—'}</div>
                     <div class="admin-card-price">${w.price}</div>
+                    <button class="btn-edit" onclick="editWatch('${w.id}', '${w.img}')">✏ Modifier</button>
                     <button class="btn-delete" onclick="deleteWatch('${w.id}', this)">Supprimer</button>
                 </div>
             `;
