@@ -713,24 +713,27 @@ async function addWatch() {
         }
 
         const price    = formatPrice(priceRaw);
-        const imgName  = imgFile.name;
+        const imgExt   = imgFile.name.includes('.') ? imgFile.name.split('.').pop().toLowerCase() : 'jpeg';
 
         initStatus();
 
-        // 1. Upload image
-        const s1 = addStep('Upload de l\'image…', 'active');
-        let imgSha = null;
-        try { const existing = await ghGet(imgName); imgSha = existing.sha; } catch(e) {}
-        const imgB64 = await fileToBase64(imgFile);
-        await ghPutBinary(imgName, imgB64, `Add image ${imgName}`, imgSha);
-        setStepDone(s1);
-
-        // 2. Read index.html
+        // 1. Read index.html first to get the next N
         const s2 = addStep('Lecture de index.html…', 'active');
         const indexData = await ghGet('index.html');
         const indexContent = fromBase64(indexData.content);
         const nextN = findNextN(indexContent);
         setStepDone(s2);
+
+        // Rename image to montreN.ext to guarantee uniqueness
+        const imgName = `montre${nextN}.${imgExt}`;
+
+        // 2. Upload image
+        const s1 = addStep(`Upload de l'image (${imgName})…`, 'active');
+        let imgSha = null;
+        try { const existing = await ghGet(imgName); imgSha = existing.sha; } catch(e) {}
+        const imgB64 = await fileToBase64(imgFile);
+        await ghPutBinary(imgName, imgB64, `Add image ${imgName}`, imgSha);
+        setStepDone(s1);
 
         // 3. Generate card
         const cardHtml = generateCard(nextN, brand, name, ref, price, imgName);
