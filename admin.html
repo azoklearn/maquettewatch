@@ -635,10 +635,11 @@ function formatPrice(raw) {
 }
 
 function generateCard(n, brand, name, reference, price, image) {
+    const fullName = name.startsWith(brand) ? name : `${brand} ${name}`;
     return `                <a href="montre${n}.html" class="watch-card" data-brand="${brand}" id="montre${n}">
-                    <img src="${image}" alt="${name}" class="watch-img" loading="lazy">
+                    <img src="${image}" alt="${fullName}" class="watch-img" loading="lazy">
                     <div class="watch-info">
-                        <h3 class="watch-name">${name}</h3>
+                        <h3 class="watch-name">${fullName}</h3>
                         <p class="watch-reference" style="font-family: var(--font-sans); font-size: 12px; color: rgba(244, 223, 186, 0.6); font-weight: 300; letter-spacing: 0.05em; margin: 4px 0;">${reference}</p>
                         <p class="watch-price">€ ${price}</p>
                     </div>
@@ -923,7 +924,12 @@ async function editWatch(id, currentImg) {
                 document.getElementById('custom-brand').value = brand;
             }
 
-            if (nameM)  document.getElementById('model-name').value = nameM[1];
+            if (nameM) {
+                // Strip brand prefix if present (e.g. "Rolex GMT Master II" → "GMT Master II")
+                let modelName = nameM[1];
+                if (modelName.startsWith(brand + ' ')) modelName = modelName.slice(brand.length + 1);
+                document.getElementById('model-name').value = modelName;
+            }
             if (refM)   document.getElementById('reference').value = refM[1].trim();
             if (priceM) document.getElementById('price').value = priceM[1].trim();
         }
