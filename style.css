@@ -1764,8 +1764,8 @@ body:not(.watch-detail-page) section.collection {
 .watch-detail-page .watch-img {
     width: 100%;
     height: auto;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
+    aspect-ratio: 9 / 16;
+    object-fit: contain;
     object-position: center center;
     border-radius: 12px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
@@ -1824,8 +1824,8 @@ body:not(.watch-detail-page) section.collection {
     max-width: 560px;
     width: 100%;
     height: auto;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
+    aspect-ratio: 9 / 16;
+    object-fit: contain;
     object-position: center center;
     animation: slideInFromLeft 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
     opacity: 0;
@@ -2123,11 +2123,11 @@ body:not(.watch-detail-page) section.collection {
 
 @media (max-width: 768px) {
     .watch-header {
-        order: 2;
-    }
-    
-    .watch-image-container {
         order: 1;
+    }
+
+    .watch-image-container {
+        order: 5;
     }
     
     .watch-title-row {
@@ -2146,7 +2146,7 @@ body:not(.watch-detail-page) section.collection {
 }
 
 .watch-image-container {
-    order: 2;
+    order: 5;
     width: 100%;
 }
 
@@ -2503,13 +2503,13 @@ body:not(.watch-detail-page) section.collection {
 .watch-img {
     width: 100%;
     height: auto;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 9 / 16;
     min-height: unset;
     max-height: unset;
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center center;
     filter: brightness(0.98) contrast(1.08) saturate(1.1);
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
@@ -3421,8 +3421,8 @@ body:not(.watch-detail-page) section.collection {
     .watch-detail-page .watch-img {
         max-width: 100%;
         width: 100%;
-        aspect-ratio: 4 / 5;
-        object-fit: cover;
+        aspect-ratio: 9 / 16;
+        object-fit: contain;
         object-position: center center;
     }
     
@@ -3662,8 +3662,8 @@ body:not(.watch-detail-page) section.collection {
     .watch-detail-page .watch-img {
         max-width: 100%;
         width: 100%;
-        aspect-ratio: 4 / 5;
-        object-fit: cover;
+        aspect-ratio: 9 / 16;
+        object-fit: contain;
         object-position: center center;
     }
     
