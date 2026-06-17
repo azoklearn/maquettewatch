@@ -2029,7 +2029,7 @@ body:not(.watch-detail-page) section.collection {
     margin: 15px 0;
     padding: 10px 0;
     border-bottom: 1px solid rgba(244, 223, 186, 0.1);
-    order: 4;
+    order: 5;
 }
 
 .watch-description p {
@@ -2127,7 +2127,7 @@ body:not(.watch-detail-page) section.collection {
     }
 
     .watch-image-container {
-        order: 5;
+        order: 4;
     }
     
     .watch-title-row {
@@ -2146,7 +2146,7 @@ body:not(.watch-detail-page) section.collection {
 }
 
 .watch-image-container {
-    order: 5;
+    order: 4;
     width: 100%;
 }
 
@@ -3401,9 +3401,9 @@ body:not(.watch-detail-page) section.collection {
     }
     
     .watch-image-container {
-        order: 1;
+        order: 4;
     }
-    
+
     .watch-text-container {
         order: 2;
     }
@@ -3642,9 +3642,9 @@ body:not(.watch-detail-page) section.collection {
     }
     
     .watch-image-container {
-        order: 1;
+        order: 4;
     }
-    
+
     .watch-text-container {
         order: 2;
     }
