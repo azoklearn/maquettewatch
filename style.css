@@ -2129,19 +2129,23 @@ body:not(.watch-detail-page) section.collection {
     .watch-image-container {
         order: 4;
     }
-    
+
     .watch-title-row {
         flex-direction: column;
         gap: 10px;
     }
-    
+
     .watch-material {
         text-align: left;
     }
-    
+
     .watch-specs-grid {
         grid-template-columns: 1fr;
         gap: 12px;
+    }
+
+    .watch-price-in-header {
+        padding: 0;
     }
 }
 
