@@ -2124,6 +2124,7 @@ body:not(.watch-detail-page) section.collection {
 @media (max-width: 768px) {
     .watch-header {
         order: 1;
+        margin-bottom: 0;
     }
 
     .watch-image-container {
@@ -2142,6 +2143,7 @@ body:not(.watch-detail-page) section.collection {
     .watch-specs-grid {
         grid-template-columns: 1fr;
         gap: 12px;
+        margin-top: 0;
     }
 
     .watch-price-in-header {
@@ -3399,7 +3401,7 @@ body:not(.watch-detail-page) section.collection {
     
     .watch-detail-content {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 16px;
         display: flex;
         flex-direction: column;
     }
@@ -3640,11 +3642,11 @@ body:not(.watch-detail-page) section.collection {
     }
     
     .watch-detail-content {
-        gap: 30px;
+        gap: 16px;
         display: flex;
         flex-direction: column;
     }
-    
+
     .watch-image-container {
         order: 4;
     }
