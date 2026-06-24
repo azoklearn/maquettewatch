@@ -628,6 +628,31 @@ function setSuccess(msg) {
     statusEl.innerHTML = msg;
 }
 
+// ─── Banner helpers ───────────────────────────────────────────────────────────
+function getBannerItems(html) {
+    const regex = /<a href="(montre\d+\.html)" class="banner-watch-item">\s*<img src="([^"]+)" alt="([^"]*)" class="banner-watch-img">\s*<span class="banner-watch-name">([^<]*)<\/span>\s*<\/a>/g;
+    const items = [];
+    let m;
+    while ((m = regex.exec(html)) !== null) {
+        items.push({ href: m[1], src: m[2], alt: m[3], name: m[4] });
+    }
+    // Deduplicate (banner is doubled for infinite loop)
+    const seen = new Set();
+    return items.filter(item => seen.has(item.href) ? false : seen.add(item.href));
+}
+
+function updateBannerHtml(html, items) {
+    if (items.length === 0) return html;
+    const doubled = [...items, ...items];
+    const inner = doubled.map(item =>
+        `\n                            <a href="${item.href}" class="banner-watch-item">\n                                <img src="${item.src}" alt="${item.alt}" class="banner-watch-img">\n                                <span class="banner-watch-name">${item.name}</span>\n                            </a>`
+    ).join('');
+    return html.replace(
+        /(<div class="banner-watches-wrapper">)[\s\S]*?(<\/div>\s*<\/div>\s*<\/div>\s*<\/div>)/,
+        (_, open, close) => `${open}${inner}\n                        ${close}`
+    );
+}
+
 // ─── HTML generators ──────────────────────────────────────────────────────────
 function formatPrice(raw) {
     // Accept "11500", "11.500", "11 500" → return "11.500"
@@ -822,9 +847,15 @@ async function addWatch() {
         // 3. Generate card
         const cardHtml = generateCard(nextN, brand, name, ref, price, imgName);
 
-        // 4. Update index.html
+        // 4. Update index.html (card + banner)
         const s3 = addStep(`Ajout de la carte (montre${nextN}) dans index.html…`, 'active');
-        const newIndex = insertCard(indexContent, cardHtml);
+        let newIndex = insertCard(indexContent, cardHtml);
+        // Update banner: add new watch, keep max 8
+        const fullName = name.startsWith(brand) ? name : `${brand} ${name}`;
+        let bannerItems = getBannerItems(newIndex);
+        bannerItems.push({ href: `montre${nextN}.html`, src: imgName, alt: fullName, name: fullName });
+        if (bannerItems.length > 8) bannerItems.shift();
+        newIndex = updateBannerHtml(newIndex, bannerItems);
         await ghPut('index.html', newIndex, `Add montre${nextN} (${brand} ${name} €${price})`, indexData.sha);
         setStepDone(s3);
 
@@ -1152,7 +1183,11 @@ async function deleteWatch(id, btn) {
         if (!match) throw new Error(`Carte "${id}" introuvable.`);
         const imgMatch = match[0].match(/src="([^"]+)"/);
         const imgSrc = imgMatch ? imgMatch[1] : null;
-        const newIndex = indexContent.replace(new RegExp(`\\s*<a [^>]*id="${id}"[^>]*>[\\s\\S]*?<\\/a>`, 'g'), '');
+        let newIndex = indexContent.replace(new RegExp(`\\s*<a [^>]*id="${id}"[^>]*>[\\s\\S]*?<\\/a>`, 'g'), '');
+        // Remove from banner if present
+        let bannerItems = getBannerItems(newIndex);
+        bannerItems = bannerItems.filter(item => item.href !== `${id}.html`);
+        newIndex = updateBannerHtml(newIndex, bannerItems);
         await ghPut('index.html', newIndex, `Remove ${id}`, indexData.sha);
 
         // Update catalogue.html
