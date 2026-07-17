@@ -863,7 +863,8 @@ async function addWatch() {
         const s4 = addStep('Mise à jour de catalogue.html…', 'active');
         const catData = await ghGet('catalogue.html');
         const catContent = fromBase64(catData.content);
-        const newCat = insertCard(catContent, cardHtml);
+        let newCat = insertCard(catContent, cardHtml);
+        newCat = updateBannerHtml(newCat, bannerItems);
         await ghPut('catalogue.html', newCat, `Add montre${nextN} to catalogue`, catData.sha);
         setStepDone(s4);
 
@@ -1190,9 +1191,10 @@ async function deleteWatch(id, btn) {
         newIndex = updateBannerHtml(newIndex, bannerItems);
         await ghPut('index.html', newIndex, `Remove ${id}`, indexData.sha);
 
-        // Update catalogue.html
+        // Update catalogue.html (card + banner, kept in sync with index.html)
         const catData = await ghGet('catalogue.html');
-        const newCat = fromBase64(catData.content).replace(new RegExp(`\\s*<a [^>]*id="${id}"[^>]*>[\\s\\S]*?<\\/a>`, 'g'), '');
+        let newCat = fromBase64(catData.content).replace(new RegExp(`\\s*<a [^>]*id="${id}"[^>]*>[\\s\\S]*?<\\/a>`, 'g'), '');
+        newCat = updateBannerHtml(newCat, bannerItems);
         await ghPut('catalogue.html', newCat, `Remove ${id} from catalogue`, catData.sha);
 
         // Delete detail page
