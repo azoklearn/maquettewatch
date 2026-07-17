@@ -1066,12 +1066,22 @@ async function updateWatch() {
         }
 
         const cardHtml = generateCard(n, brand, name, ref, price, imgName);
+        const fullName = name.startsWith(brand) ? name : `${brand} ${name}`;
+
+        // Rewrite this watch's banner entry so a renamed or re-uploaded image
+        // does not leave the banner pointing at the old file.
+        const syncBanner = html => updateBannerHtml(html, getBannerItems(html).map(item =>
+            item.href === `${id}.html`
+                ? { href: item.href, src: imgName, alt: fullName, name: fullName }
+                : item
+        ));
 
         // 2. Update index.html
         const s2 = addStep('Mise à jour de index.html…', 'active');
         const indexData = await ghGet('index.html');
         let indexContent = fromBase64(indexData.content);
         indexContent = replaceCard(indexContent, id, cardHtml);
+        indexContent = syncBanner(indexContent);
         await ghPut('index.html', indexContent, `Update ${id} (${brand} ${name})`, indexData.sha);
         setStepDone(s2);
 
@@ -1080,6 +1090,7 @@ async function updateWatch() {
         const catData = await ghGet('catalogue.html');
         let catContent = fromBase64(catData.content);
         catContent = replaceCard(catContent, id, cardHtml);
+        catContent = syncBanner(catContent);
         await ghPut('catalogue.html', catContent, `Update ${id} in catalogue`, catData.sha);
         setStepDone(s3);
 
