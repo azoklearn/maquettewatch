@@ -10,8 +10,8 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            background: #0a0a0a;
-            color: #f4dfba;
+            background: #0a0510;
+            color: #ffffff;
             font-family: 'Raleway', sans-serif;
             min-height: 100vh;
             padding: 40px 20px;
@@ -27,13 +27,13 @@
             font-weight: 300;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            color: #f4dfba;
+            color: #ffffff;
             margin-bottom: 8px;
         }
 
         .subtitle {
             font-size: 12px;
-            color: rgba(244, 223, 186, 0.4);
+            color: rgba(255, 255, 255, 0.4);
             letter-spacing: 0.1em;
             text-transform: uppercase;
             margin-bottom: 40px;
@@ -41,8 +41,8 @@
 
         /* Token section */
         #token-section {
-            background: rgba(244, 223, 186, 0.04);
-            border: 1px solid rgba(244, 223, 186, 0.12);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 4px;
             padding: 24px;
             margin-bottom: 32px;
@@ -62,7 +62,7 @@
         .token-status {
             font-size: 12px;
             letter-spacing: 0.08em;
-            color: rgba(244, 223, 186, 0.5);
+            color: rgba(255, 255, 255, 0.5);
             margin-bottom: 12px;
         }
 
@@ -88,14 +88,14 @@
             font-weight: 600;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: rgba(244, 223, 186, 0.6);
+            color: rgba(255, 255, 255, 0.6);
         }
 
         input, select, textarea {
-            background: rgba(244, 223, 186, 0.06);
-            border: 1px solid rgba(244, 223, 186, 0.15);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 3px;
-            color: #f4dfba;
+            color: #ffffff;
             font-family: 'Raleway', sans-serif;
             font-size: 14px;
             font-weight: 300;
@@ -106,12 +106,12 @@
         }
 
         input:focus, select:focus, textarea:focus {
-            border-color: rgba(244, 223, 186, 0.4);
+            border-color: rgba(255, 255, 255, 0.4);
         }
 
         select option {
             background: #1a1a1a;
-            color: #f4dfba;
+            color: #ffffff;
         }
 
         input[type="file"] {
@@ -120,10 +120,10 @@
         }
 
         input[type="file"]::file-selector-button {
-            background: rgba(244, 223, 186, 0.1);
-            border: 1px solid rgba(244, 223, 186, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 2px;
-            color: #f4dfba;
+            color: #ffffff;
             cursor: pointer;
             font-family: 'Raleway', sans-serif;
             font-size: 11px;
@@ -136,7 +136,7 @@
         }
 
         input[type="file"]::file-selector-button:hover {
-            background: rgba(244, 223, 186, 0.18);
+            background: rgba(255, 255, 255, 0.18);
         }
 
         .image-preview {
@@ -146,15 +146,15 @@
             border-radius: 3px;
             margin-top: 8px;
             display: none;
-            border: 1px solid rgba(244, 223, 186, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         /* Buttons */
         .btn {
             background: transparent;
-            border: 1px solid rgba(244, 223, 186, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 2px;
-            color: #f4dfba;
+            color: #ffffff;
             cursor: pointer;
             font-family: 'Raleway', sans-serif;
             font-size: 11px;
@@ -165,12 +165,12 @@
             transition: all 0.2s;
         }
 
-        .btn:hover { background: rgba(244, 223, 186, 0.08); border-color: rgba(244, 223, 186, 0.5); }
+        .btn:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.5); }
         .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
         .btn-primary {
-            background: rgba(244, 223, 186, 0.1);
-            border-color: rgba(244, 223, 186, 0.5);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
             width: 100%;
             padding: 16px;
             font-size: 12px;
@@ -178,7 +178,7 @@
         }
 
         .btn-primary:hover:not(:disabled) {
-            background: rgba(244, 223, 186, 0.18);
+            background: rgba(255, 255, 255, 0.18);
         }
 
         /* Status */
@@ -193,9 +193,9 @@
 
         #status.loading {
             display: block;
-            background: rgba(244, 223, 186, 0.05);
-            border: 1px solid rgba(244, 223, 186, 0.15);
-            color: rgba(244, 223, 186, 0.7);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.7);
         }
 
         #status.success {
@@ -215,7 +215,7 @@
         .step { margin: 4px 0; }
         .step::before { content: '→ '; opacity: 0.5; }
         .step.done::before { content: '✓ '; color: rgba(100, 220, 100, 0.8); opacity: 1; }
-        .step.active::before { content: '⋯ '; color: rgba(244, 223, 186, 0.8); opacity: 1; }
+        .step.active::before { content: '⋯ '; color: rgba(255, 255, 255, 0.8); opacity: 1; }
 
         /* Section heading */
         .section-title {
@@ -223,16 +223,16 @@
             font-weight: 700;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            color: rgba(244, 223, 186, 0.35);
+            color: rgba(255, 255, 255, 0.35);
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 1px solid rgba(244, 223, 186, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         /* Divider */
         .divider {
             border: none;
-            border-top: 1px solid rgba(244, 223, 186, 0.08);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
             margin: 48px 0;
         }
 
@@ -249,15 +249,15 @@
         }
 
         .admin-card {
-            background: rgba(244, 223, 186, 0.03);
-            border: 1px solid rgba(244, 223, 186, 0.1);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 4px;
             overflow: hidden;
             transition: border-color 0.2s;
             position: relative;
         }
 
-        .admin-card:hover { border-color: rgba(244, 223, 186, 0.25); }
+        .admin-card:hover { border-color: rgba(255, 255, 255, 0.25); }
 
         .admin-card img {
             width: 100%;
@@ -273,7 +273,7 @@
         .admin-card-name {
             font-size: 12px;
             font-weight: 600;
-            color: #f4dfba;
+            color: #ffffff;
             margin-bottom: 4px;
             white-space: nowrap;
             overflow: hidden;
@@ -282,7 +282,7 @@
 
         .admin-card-ref {
             font-size: 11px;
-            color: rgba(244, 223, 186, 0.45);
+            color: rgba(255, 255, 255, 0.45);
             margin-bottom: 6px;
             letter-spacing: 0.04em;
         }
@@ -290,7 +290,7 @@
         .admin-card-price {
             font-size: 13px;
             font-weight: 500;
-            color: rgba(244, 223, 186, 0.85);
+            color: rgba(255, 255, 255, 0.85);
             margin-bottom: 10px;
         }
 
@@ -321,9 +321,9 @@
         .btn-edit {
             width: 100%;
             background: transparent;
-            border: 1px solid rgba(244, 223, 186, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             border-radius: 2px;
-            color: rgba(244, 223, 186, 0.7);
+            color: rgba(255, 255, 255, 0.7);
             cursor: pointer;
             font-family: 'Raleway', sans-serif;
             font-size: 10px;
@@ -336,20 +336,20 @@
         }
 
         .btn-edit:hover {
-            background: rgba(244, 223, 186, 0.08);
-            border-color: rgba(244, 223, 186, 0.5);
-            color: rgba(244, 223, 186, 1);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 1);
         }
 
         .edit-mode-banner {
             display: none;
-            background: rgba(244, 223, 186, 0.07);
-            border: 1px solid rgba(244, 223, 186, 0.3);
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 4px;
             padding: 14px 18px;
             margin-bottom: 20px;
             font-size: 12px;
-            color: rgba(244, 223, 186, 0.8);
+            color: rgba(255, 255, 255, 0.8);
             letter-spacing: 0.06em;
             display: none;
             align-items: center;
@@ -361,9 +361,9 @@
 
         .btn-cancel-edit {
             background: transparent;
-            border: 1px solid rgba(244, 223, 186, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 2px;
-            color: rgba(244, 223, 186, 0.6);
+            color: rgba(255, 255, 255, 0.6);
             cursor: pointer;
             font-family: 'Raleway', sans-serif;
             font-size: 10px;
@@ -376,20 +376,20 @@
         }
 
         .btn-cancel-edit:hover {
-            background: rgba(244, 223, 186, 0.08);
-            color: rgba(244, 223, 186, 0.9);
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .image-hint {
             font-size: 11px;
-            color: rgba(244, 223, 186, 0.35);
+            color: rgba(255, 255, 255, 0.35);
             margin-top: 4px;
             letter-spacing: 0.04em;
         }
 
         #catalogue-loading {
             font-size: 13px;
-            color: rgba(244, 223, 186, 0.4);
+            color: rgba(255, 255, 255, 0.4);
             padding: 20px 0;
         }
 
@@ -667,7 +667,7 @@ function generateCard(n, brand, name, reference, price, image) {
                     <img src="${image}" alt="${fullName}" class="watch-img" loading="lazy">
                     <div class="watch-info">
                         <h3 class="watch-name">${fullName}</h3>
-                        <p class="watch-reference" style="font-family: var(--font-sans); font-size: 12px; color: rgba(244, 223, 186, 0.6); font-weight: 300; letter-spacing: 0.05em; margin: 4px 0;">${reference}</p>
+                        <p class="watch-reference" style="font-family: var(--font-sans); font-size: 12px; color: rgba(255, 255, 255, 0.6); font-weight: 300; letter-spacing: 0.05em; margin: 4px 0;">${reference}</p>
                         <p class="watch-price">€ ${price}</p>
                     </div>
                 </a>`;
@@ -725,7 +725,7 @@ function generateDetailPage(n, brand, name, reference, date, condition, watchSet
                     <div class="watch-title-row">
                         <h1 class="watch-title">${name}</h1>
                     </div>
-                    <div class="watch-reference" style="font-family: var(--font-sans); font-size: 14px; color: rgba(244, 223, 186, 0.7); font-weight: 300; letter-spacing: 0.05em; margin-top: 8px;">${reference}</div>
+                    <div class="watch-reference" style="font-family: var(--font-sans); font-size: 14px; color: rgba(255, 255, 255, 0.7); font-weight: 300; letter-spacing: 0.05em; margin-top: 8px;">${reference}</div>
                     <div class="watch-price-in-header">
                         <p class="watch-price-large">€ ${price}</p>
                     </div>
@@ -1162,7 +1162,7 @@ async function loadCatalogue() {
             card.id = 'admin-card-' + w.id;
             const imgUrl = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${encodeURIComponent(w.img)}?t=${Date.now()}`;
             card.innerHTML = `
-                <img src="${imgUrl}" alt="${w.name}" onerror="this.style.background='rgba(244,223,186,0.05)';this.style.height='160px'">
+                <img src="${imgUrl}" alt="${w.name}" onerror="this.style.background='rgba(255, 255, 255,0.05)';this.style.height='160px'">
                 <div class="admin-card-info">
                     <div class="admin-card-name">${w.name}</div>
                     <div class="admin-card-ref">${w.ref || '—'}</div>
