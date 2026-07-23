@@ -757,131 +757,29 @@ document.addEventListener('DOMContentLoaded', () => {
 console.log('🕐 Machiavelli - L\'Art du Temps - Site chargé avec succès');
 
 // ===================================
-// ÉCRAN D'ENTRÉE AVEC VIDÉO
+// DÉMARRAGE DE LA PAGE
 // ===================================
 
 // Toujours commencer en haut de la page
 window.scrollTo({ top: 0, behavior: 'instant' });
 
-document.body.classList.add('loading');
+// Plus d'écran d'entrée : le site est visible et scrollable immédiatement
+document.body.classList.remove('loading');
 
-function hideEntrance() {
-    const doorEntrance = document.getElementById('doorEntrance');
-    
-    // Toujours scroller vers le haut de la page
-    window.scrollTo({ top: 0, behavior: 'instant' });
-    
-    if (doorEntrance) {
-        // Ajouter la classe hidden pour déclencher la transition fade-out
-        doorEntrance.classList.add('hidden');
-
-        // Retirer la classe loading immédiatement pour révéler le site
-        document.body.classList.remove('loading');
-    } else {
-        // Fallback si pas d'écran d'entrée
-        document.body.classList.remove('loading');
-    }
-
-    // Relancer la vidéo de fond si l'autoplay a été bloqué au chargement
+// Lancer la vidéo de fond, avec repli sur la première interaction
+// si le navigateur bloque l'autoplay au chargement
+function startHeroVideo() {
     const heroVideo = document.querySelector('video.hero-video');
     if (heroVideo && heroVideo.paused) {
         heroVideo.muted = true;
         const p = heroVideo.play();
         if (p && p.catch) p.catch(() => {});
     }
-    
-    // S'assurer qu'on reste en haut après un court délai
-    setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'instant' });
-    }, 100);
 }
 
-window.addEventListener('load', () => {
-    // Toujours commencer en haut de la page
-    window.scrollTo({ top: 0, behavior: 'instant' });
-    
-    const doorEntrance = document.getElementById('doorEntrance');
-
-    if (doorEntrance) {
-        // Event delegation for skip button - works even if button text changes
-        doorEntrance.addEventListener('click', (e) => {
-            const skipButton = e.target.closest('#skipIntroButton');
-            if (skipButton) {
-                e.preventDefault();
-                e.stopPropagation();
-                hideEntrance();
-            }
-        });
-
-        // Event delegation for enter button - works even if button text changes
-        doorEntrance.addEventListener('click', (e) => {
-            const enterBtn = e.target.closest('#enterButton');
-            if (enterBtn) {
-                e.preventDefault();
-                e.stopPropagation();
-                const doorLogoImage = document.getElementById('doorLogoImage');
-                const welcomeText = document.getElementById('welcomeText');
-
-                if (welcomeText) {
-                    welcomeText.style.opacity = '0';
-                }
-
-                if (doorLogoImage) {
-                    doorLogoImage.classList.add('no-blur');
-                    setTimeout(hideEntrance, 500);
-                } else {
-                    hideEntrance();
-                }
-            }
-        });
-    } else {
-        document.body.classList.remove('loading');
-    }
-});
-
-// Si la page est déjà chargée - utiliser la même délégation d'événements
-if (document.readyState === 'complete') {
-    // Toujours commencer en haut de la page
-    window.scrollTo({ top: 0, behavior: 'instant' });
-    
-    const doorEntrance = document.getElementById('doorEntrance');
-
-    if (doorEntrance) {
-        // Event delegation for skip button - works even if button text changes
-        doorEntrance.addEventListener('click', (e) => {
-            const skipButton = e.target.closest('#skipIntroButton');
-            if (skipButton) {
-                e.preventDefault();
-                e.stopPropagation();
-                hideEntrance();
-            }
-        });
-
-        // Event delegation for enter button - works even if button text changes
-        doorEntrance.addEventListener('click', (e) => {
-            const enterBtn = e.target.closest('#enterButton');
-            if (enterBtn) {
-                e.preventDefault();
-                e.stopPropagation();
-                const doorLogoImage = document.getElementById('doorLogoImage');
-                const welcomeText = document.getElementById('welcomeText');
-
-                if (welcomeText) {
-                    welcomeText.style.opacity = '0';
-                }
-
-                if (doorLogoImage) {
-                    doorLogoImage.classList.add('no-blur');
-                    setTimeout(hideEntrance, 500);
-                } else {
-                    hideEntrance();
-                }
-            }
-        });
-    } else {
-        document.body.classList.remove('loading');
-    }
-}
+startHeroVideo();
+window.addEventListener('load', startHeroVideo);
+document.addEventListener('click', startHeroVideo, { once: true });
 
 // ===================================
 // TRANSLATION SYSTEM
