@@ -1110,12 +1110,15 @@ body::before {
     letter-spacing: 0.15em;
     text-transform: uppercase;
     text-decoration: none;
-    border: 1px solid #33093d;
+    border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 2px;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(51, 9, 61, 0.3);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.12),
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                0 4px 20px rgba(51, 9, 61, 0.3);
 }
 
 .hero-catalogue-button::before {
@@ -1136,9 +1139,12 @@ body::before {
 
 .hero-catalogue-button:hover {
     background: #3d0f4a;
-    border-color: #3d0f4a;
+    border-color: rgba(255, 255, 255, 0.65);
     transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(51, 9, 61, 0.4);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.15),
+                0 0 0 1px rgba(255, 255, 255, 0.18),
+                0 8px 30px rgba(51, 9, 61, 0.4);
 }
 
 .hero-catalogue-button span {
