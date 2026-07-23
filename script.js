@@ -774,12 +774,20 @@ function hideEntrance() {
     if (doorEntrance) {
         // Ajouter la classe hidden pour déclencher la transition fade-out
         doorEntrance.classList.add('hidden');
-        
+
         // Retirer la classe loading immédiatement pour révéler le site
         document.body.classList.remove('loading');
     } else {
         // Fallback si pas d'écran d'entrée
         document.body.classList.remove('loading');
+    }
+
+    // Relancer la vidéo de fond si l'autoplay a été bloqué au chargement
+    const heroVideo = document.querySelector('video.hero-video');
+    if (heroVideo && heroVideo.paused) {
+        heroVideo.muted = true;
+        const p = heroVideo.play();
+        if (p && p.catch) p.catch(() => {});
     }
     
     // S'assurer qu'on reste en haut après un court délai
@@ -792,9 +800,8 @@ window.addEventListener('load', () => {
     // Toujours commencer en haut de la page
     window.scrollTo({ top: 0, behavior: 'instant' });
     
-    const storeVideo = document.getElementById('storeVideo');
     const doorEntrance = document.getElementById('doorEntrance');
-    
+
     if (doorEntrance) {
         // Event delegation for skip button - works even if button text changes
         doorEntrance.addEventListener('click', (e) => {
@@ -805,7 +812,7 @@ window.addEventListener('load', () => {
                 hideEntrance();
             }
         });
-        
+
         // Event delegation for enter button - works even if button text changes
         doorEntrance.addEventListener('click', (e) => {
             const enterBtn = e.target.closest('#enterButton');
@@ -814,46 +821,19 @@ window.addEventListener('load', () => {
                 e.stopPropagation();
                 const doorLogoImage = document.getElementById('doorLogoImage');
                 const welcomeText = document.getElementById('welcomeText');
-                const doorIntro = document.getElementById('doorIntro');
-                
+
                 if (welcomeText) {
                     welcomeText.style.opacity = '0';
                 }
-                
+
                 if (doorLogoImage) {
                     doorLogoImage.classList.add('no-blur');
-                    setTimeout(() => {
-                        if (doorIntro) doorIntro.style.display = 'none';
-                        if (storeVideo) {
-                            storeVideo.style.display = 'block';
-                            storeVideo.playbackRate = 1.5;
-                            storeVideo.play();
-                        }
-                    }, 500);
+                    setTimeout(hideEntrance, 500);
                 } else {
-                    if (doorIntro) doorIntro.style.display = 'none';
-                    if (storeVideo) {
-                        storeVideo.style.display = 'block';
-                        storeVideo.playbackRate = 1.5;
-                        storeVideo.play();
-                    }
+                    hideEntrance();
                 }
             }
         });
-    }
-    
-    if (storeVideo) {
-        storeVideo.load();
-        storeVideo.addEventListener('ended', () => {
-            hideEntrance();
-        });
-        storeVideo.addEventListener('error', () => {
-            hideEntrance();
-        });
-    } else if (doorEntrance) {
-        setTimeout(() => {
-            hideEntrance();
-        }, 500);
     } else {
         document.body.classList.remove('loading');
     }
@@ -864,10 +844,8 @@ if (document.readyState === 'complete') {
     // Toujours commencer en haut de la page
     window.scrollTo({ top: 0, behavior: 'instant' });
     
-    const storeVideo = document.getElementById('storeVideo');
     const doorEntrance = document.getElementById('doorEntrance');
-    const doorIntro = document.getElementById('doorIntro');
-    
+
     if (doorEntrance) {
         // Event delegation for skip button - works even if button text changes
         doorEntrance.addEventListener('click', (e) => {
@@ -878,7 +856,7 @@ if (document.readyState === 'complete') {
                 hideEntrance();
             }
         });
-        
+
         // Event delegation for enter button - works even if button text changes
         doorEntrance.addEventListener('click', (e) => {
             const enterBtn = e.target.closest('#enterButton');
@@ -887,45 +865,19 @@ if (document.readyState === 'complete') {
                 e.stopPropagation();
                 const doorLogoImage = document.getElementById('doorLogoImage');
                 const welcomeText = document.getElementById('welcomeText');
-                
+
                 if (welcomeText) {
                     welcomeText.style.opacity = '0';
                 }
-                
+
                 if (doorLogoImage) {
                     doorLogoImage.classList.add('no-blur');
-                    setTimeout(() => {
-                        if (doorIntro) doorIntro.style.display = 'none';
-                        if (storeVideo) {
-                            storeVideo.style.display = 'block';
-                            storeVideo.playbackRate = 1.5;
-                            storeVideo.play();
-                        }
-                    }, 500);
+                    setTimeout(hideEntrance, 500);
                 } else {
-                    if (doorIntro) doorIntro.style.display = 'none';
-                    if (storeVideo) {
-                        storeVideo.style.display = 'block';
-                        storeVideo.playbackRate = 1.5;
-                        storeVideo.play();
-                    }
+                    hideEntrance();
                 }
             }
         });
-    }
-    
-    if (storeVideo) {
-        storeVideo.load();
-        storeVideo.addEventListener('ended', () => {
-            hideEntrance();
-        });
-        storeVideo.addEventListener('error', () => {
-            hideEntrance();
-        });
-    } else if (doorEntrance) {
-        setTimeout(() => {
-            hideEntrance();
-        }, 500);
     } else {
         document.body.classList.remove('loading');
     }
