@@ -3378,8 +3378,13 @@ body:not(.watch-detail-page) section.collection {
     
     .hero-content {
         padding-top: 2vh;
+        margin-top: -14vh;
     }
-    
+
+    .hero-text {
+        padding-top: 0;
+    }
+
     .hero-title {
         font-size: clamp(36px, 10vw, 56px);
         letter-spacing: 0.01em;
