@@ -2302,12 +2302,12 @@ body:not(.watch-detail-page) section.collection {
 }
 
 .watch-card:hover::after {
-    opacity: 1;
+    opacity: 0;
 }
 
 .watch-card:hover::before {
-    opacity: 1;
-    animation: watchShimmer 2s ease-in-out infinite;
+    opacity: 0.6;
+    animation: none;
 }
 
 @keyframes watchShimmer {
