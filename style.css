@@ -2326,11 +2326,9 @@ body:not(.watch-detail-page) section.collection {
     transform: translateY(-15px) scale(1.03) !important;
     opacity: 1 !important;
     border-color: rgba(255, 255, 255, 0.5) !important;
-    box-shadow: 
+    box-shadow:
         0 30px 100px rgba(0, 0, 0, 0.6),
         0 15px 40px rgba(0, 0, 0, 0.5),
-        0 0 60px rgba(255, 255, 255, 0.3),
-        inset 0 2px 0 rgba(255, 255, 255, 0.5),
         inset 0 -2px 0 rgba(0, 0, 0, 0.3) !important;
     background: linear-gradient(135deg, #2a0a33 0%, #1e0824 50%, #331340 100%) !important;
     background-image: 
