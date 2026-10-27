@@ -597,6 +597,8 @@ document.addEventListener('DOMContentLoaded', () => {
         '.watch-card img.watch-img, .about-image, .craft-icon, .watch-img'
     );
     imagesToAnimate.forEach(img => {
+        // Ne pas animer les images de la galerie (défilement horizontal)
+        if (img.closest('.watch-gallery')) return;
         // Vérifier si l'image est déjà visible dans le viewport pour éviter le flash
         const rect = img.getBoundingClientRect();
         const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
@@ -1555,3 +1557,38 @@ document.addEventListener('DOMContentLoaded', function() {
         applyTranslationWhenReady();
     }
 });
+
+// ===================================
+// GALERIE PHOTOS (pages produit)
+// ===================================
+(function initWatchGalleries() {
+    const galleries = document.querySelectorAll('.watch-gallery');
+    galleries.forEach(gallery => {
+        const track = gallery.querySelector('.watch-gallery-track');
+        const slides = gallery.querySelectorAll('.watch-img');
+        if (!track || slides.length <= 1) return;
+
+        const dots = gallery.querySelectorAll('.gallery-dot');
+        const prev = gallery.querySelector('.gallery-prev');
+        const next = gallery.querySelector('.gallery-next');
+
+        const currentIndex = () => Math.round(track.scrollLeft / track.clientWidth);
+        const goTo = i => {
+            const idx = Math.max(0, Math.min(slides.length - 1, i));
+            track.scrollTo({ left: track.clientWidth * idx, behavior: 'smooth' });
+        };
+
+        if (prev) prev.addEventListener('click', () => goTo(currentIndex() - 1));
+        if (next) next.addEventListener('click', () => goTo(currentIndex() + 1));
+        dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+
+        let raf;
+        track.addEventListener('scroll', () => {
+            cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(() => {
+                const idx = currentIndex();
+                dots.forEach((dot, i) => dot.classList.toggle('active', i === idx));
+            });
+        });
+    });
+})();

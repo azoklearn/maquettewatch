@@ -482,9 +482,9 @@
         </div>
 
         <div class="form-group full">
-            <label>Image</label>
-            <input type="file" id="image-file" accept="image/*" onchange="previewImage(this)">
-            <p class="image-hint" id="image-hint"></p>
+            <label>Photos (plusieurs possibles)</label>
+            <input type="file" id="image-file" accept="image/*" multiple onchange="previewImage(this)">
+            <p class="image-hint" id="image-hint">La 1re photo sert de vignette. Les suivantes s'ajoutent à la galerie.</p>
             <img id="image-preview" class="image-preview" alt="Aperçu">
         </div>
 
@@ -519,6 +519,7 @@ const GH_TOKEN = ['ghp_9NRvqgMo', 'HvrVPbZidf', 'USm7sMdwXJsL1yg453'].join('');
 let editMode = false;
 let editId = null;
 let editCurrentImg = null;
+let editImages = [];
 
 // ─── Brand toggle ─────────────────────────────────────────────────────────────
 function updateBrandName() {
@@ -529,10 +530,17 @@ function updateBrandName() {
 // ─── Image preview ────────────────────────────────────────────────────────────
 function previewImage(input) {
     const preview = document.getElementById('image-preview');
-    if (input.files && input.files[0]) {
+    const files = input.files;
+    if (files && files[0]) {
         const reader = new FileReader();
         reader.onload = e => { preview.src = e.target.result; preview.style.display = 'block'; };
-        reader.readAsDataURL(input.files[0]);
+        reader.readAsDataURL(files[0]);
+        const hint = document.getElementById('image-hint');
+        if (editMode) {
+            hint.textContent = `${editImages.length} photo(s) actuelle(s) + ${files.length} à ajouter`;
+        } else {
+            hint.textContent = `${files.length} photo(s) sélectionnée(s) — la 1re sert de vignette`;
+        }
     }
 }
 
@@ -673,7 +681,29 @@ function generateCard(n, brand, name, reference, price, image) {
                 </a>`;
 }
 
-function generateDetailPage(n, brand, name, reference, date, condition, watchSet, price, image) {
+// Build the photo gallery markup from an array of image filenames
+function galleryHtml(images, alt) {
+    const list = (images && images.length) ? images : [];
+    const slides = list.map((src, i) =>
+        `                        <img src="${src}" alt="${alt}" class="watch-img" decoding="async"${i === 0 ? '' : ' fetchpriority="low"'}>`
+    ).join('\n');
+    const dots = list.map((_, i) =>
+        `                        <span class="gallery-dot${i === 0 ? ' active' : ''}"></span>`
+    ).join('\n');
+    return `<div class="watch-gallery" data-count="${list.length}">
+                    <div class="watch-gallery-track">
+${slides}
+                    </div>
+                    <button type="button" class="gallery-nav gallery-prev" aria-label="Photo précédente">&#8249;</button>
+                    <button type="button" class="gallery-nav gallery-next" aria-label="Photo suivante">&#8250;</button>
+                    <div class="gallery-dots">
+${dots}
+                    </div>
+                </div>`;
+}
+
+function generateDetailPage(n, brand, name, reference, date, condition, watchSet, price, images) {
+    const imgList = Array.isArray(images) ? images : [images];
     const waTitle = encodeURIComponent(`I am interested in ${brand} ${name}\n\nhttps://machiavelliwatches.com/montre${n}.html`);
     return `<!DOCTYPE html>
 <html lang="en">
@@ -731,7 +761,7 @@ function generateDetailPage(n, brand, name, reference, date, condition, watchSet
                     </div>
                 </div>
                 <div class="watch-image-container">
-                    <img src="${image}" alt="${brand} ${name}" class="watch-img" loading="lazy">
+                    ${galleryHtml(imgList, `${brand} ${name}`)}
                 </div>
                 <div class="watch-specs-grid">
                     <div class="watch-spec-label">Reference</div>
@@ -813,16 +843,15 @@ async function addWatch() {
         const cond     = document.getElementById('condition').value;
         const set      = document.getElementById('watch-set').value;
         const priceRaw = document.getElementById('price').value.trim();
-        const imgFile  = document.getElementById('image-file').files[0];
+        const imgFiles = document.getElementById('image-file').files;
 
-        if (!name || !priceRaw || !imgFile) {
-            alert('Remplis au minimum : nom, prix et image.');
+        if (!name || !priceRaw || !imgFiles.length) {
+            alert('Remplis au minimum : nom, prix et au moins une photo.');
             btn.disabled = false;
             return;
         }
 
         const price    = formatPrice(priceRaw);
-        const imgExt   = imgFile.name.includes('.') ? imgFile.name.split('.').pop().toLowerCase() : 'jpeg';
 
         initStatus();
 
@@ -833,16 +862,21 @@ async function addWatch() {
         const nextN = findNextN(indexContent);
         setStepDone(s2);
 
-        // Rename image to montreN.ext to guarantee uniqueness
-        const imgName = `montre${nextN}.${imgExt}`;
-
-        // 2. Upload image
-        const s1 = addStep(`Upload de l'image (${imgName})…`, 'active');
-        let imgSha = null;
-        try { const existing = await ghGet(imgName); imgSha = existing.sha; } catch(e) {}
-        const imgB64 = await fileToBase64(imgFile);
-        await ghPutBinary(imgName, imgB64, `Add image ${imgName}`, imgSha);
-        setStepDone(s1);
+        // 2. Upload photos (1re = vignette montreN.ext, suivantes = montreN-2.ext, …)
+        const images = [];
+        for (let i = 0; i < imgFiles.length; i++) {
+            const f = imgFiles[i];
+            const ext = f.name.includes('.') ? f.name.split('.').pop().toLowerCase() : 'jpeg';
+            const nm = i === 0 ? `montre${nextN}.${ext}` : `montre${nextN}-${i + 1}.${ext}`;
+            const s = addStep(`Upload de la photo ${i + 1}/${imgFiles.length} (${nm})…`, 'active');
+            let sha = null;
+            try { const ex = await ghGet(nm); sha = ex.sha; } catch(e) {}
+            const b64 = await fileToBase64(f);
+            await ghPutBinary(nm, b64, `Add image ${nm}`, sha);
+            setStepDone(s);
+            images.push(nm);
+        }
+        const imgName = images[0];
 
         // 3. Generate card
         const cardHtml = generateCard(nextN, brand, name, ref, price, imgName);
@@ -870,7 +904,7 @@ async function addWatch() {
 
         // 6. Create detail page
         const s5 = addStep(`Création de montre${nextN}.html…`, 'active');
-        const detailHtml = generateDetailPage(nextN, brand, name, ref, date, cond, set, price, imgName);
+        const detailHtml = generateDetailPage(nextN, brand, name, ref, date, cond, set, price, images);
         await ghPut(`montre${nextN}.html`, detailHtml, `Create montre${nextN}.html`);
         setStepDone(s5);
 
@@ -917,13 +951,14 @@ async function editWatch(id, currentImg) {
     editMode = true;
     editId = id;
     editCurrentImg = currentImg;
+    editImages = [currentImg];
 
     // Update UI
     document.getElementById('form-title').textContent = 'Modifier une montre';
     document.getElementById('submit-btn').textContent = 'Enregistrer les modifications';
     document.getElementById('edit-banner-text').textContent = `Modification de ${id}`;
     document.getElementById('edit-banner').classList.add('visible');
-    document.getElementById('image-hint').textContent = `Image actuelle : ${currentImg} — laisser vide pour la conserver`;
+    document.getElementById('image-hint').textContent = `Photos actuelles conservées — les nouvelles s'ajoutent à la galerie`;
 
     // Show current image as preview
     const imgUrl = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${encodeURIComponent(currentImg)}?t=${Date.now()}`;
@@ -973,6 +1008,13 @@ async function editWatch(id, currentImg) {
             const detailData = await ghGet(`${id}.html`);
             const detail = fromBase64(detailData.content);
 
+            // Collect existing gallery photos (primary + extras) to preserve them
+            const imgs = [...detail.matchAll(/<img[^>]*src="(montre\d+(?:-\d+)?\.[a-zA-Z0-9]+)"[^>]*class="watch-img"/g)].map(m => m[1]);
+            if (imgs.length) {
+                editImages = imgs;
+                document.getElementById('image-hint').textContent = `${imgs.length} photo(s) actuelle(s) conservée(s) — les nouvelles s'ajoutent à la galerie`;
+            }
+
             const dateM = detail.match(/<div class="watch-spec-label">Date<\/div>\s*<div class="watch-spec-value">([^<]+)<\/div>/);
             const condM = detail.match(/<div class="watch-spec-label">Condition<\/div>\s*<div class="watch-spec-value">([^<]+)<\/div>/);
             const setM  = detail.match(/<div class="watch-spec-label">Set<\/div>\s*<div class="watch-spec-value">([^<]+)<\/div>/);
@@ -1002,11 +1044,12 @@ function cancelEdit() {
     editMode = false;
     editId = null;
     editCurrentImg = null;
+    editImages = [];
 
     document.getElementById('form-title').textContent = 'Ajouter une montre';
     document.getElementById('submit-btn').textContent = 'Ajouter la montre au catalogue';
     document.getElementById('edit-banner').classList.remove('visible');
-    document.getElementById('image-hint').textContent = '';
+    document.getElementById('image-hint').textContent = "La 1re photo sert de vignette. Les suivantes s'ajoutent à la galerie.";
 
     // Reset form
     document.getElementById('brand').value = 'Rolex';
@@ -1038,7 +1081,7 @@ async function updateWatch() {
         const cond     = document.getElementById('condition').value;
         const set      = document.getElementById('watch-set').value;
         const priceRaw = document.getElementById('price').value.trim();
-        const imgFile  = document.getElementById('image-file').files[0];
+        const imgFiles = document.getElementById('image-file').files;
 
         if (!name || !priceRaw) {
             alert('Remplis au minimum : nom et prix.');
@@ -1052,18 +1095,27 @@ async function updateWatch() {
 
         initStatus();
 
-        // 1. Handle image: upload new if provided, keep existing otherwise
-        let imgName = editCurrentImg;
-        if (imgFile) {
-            const s1 = addStep(`Upload nouvelle image…`, 'active');
-            const imgExt = imgFile.name.includes('.') ? imgFile.name.split('.').pop().toLowerCase() : 'jpeg';
-            imgName = `montre${n}.${imgExt}`;
-            let imgSha = null;
-            try { const ex = await ghGet(imgName); imgSha = ex.sha; } catch(e) {}
-            const imgB64 = await fileToBase64(imgFile);
-            await ghPutBinary(imgName, imgB64, `Update image ${imgName}`, imgSha);
-            setStepDone(s1);
+        // 1. Keep existing photos, append any newly uploaded ones to the gallery
+        const images = editImages.slice();
+        let maxIdx = 1;
+        for (const nm of images) {
+            const m = nm.match(/montre\d+-(\d+)\./);
+            if (m) maxIdx = Math.max(maxIdx, parseInt(m[1]));
         }
+        for (let i = 0; i < imgFiles.length; i++) {
+            const f = imgFiles[i];
+            const ext = f.name.includes('.') ? f.name.split('.').pop().toLowerCase() : 'jpeg';
+            maxIdx += 1;
+            const nm = `montre${n}-${maxIdx}.${ext}`;
+            const s1 = addStep(`Upload nouvelle photo ${i + 1}/${imgFiles.length} (${nm})…`, 'active');
+            let sha = null;
+            try { const ex = await ghGet(nm); sha = ex.sha; } catch(e) {}
+            const b64 = await fileToBase64(f);
+            await ghPutBinary(nm, b64, `Add image ${nm}`, sha);
+            setStepDone(s1);
+            images.push(nm);
+        }
+        const imgName = images[0];
 
         const cardHtml = generateCard(n, brand, name, ref, price, imgName);
         const fullName = name.startsWith(brand) ? name : `${brand} ${name}`;
@@ -1098,7 +1150,7 @@ async function updateWatch() {
         const s4 = addStep(`Mise à jour de ${id}.html…`, 'active');
         let detailSha = null;
         try { const ex = await ghGet(`${id}.html`); detailSha = ex.sha; } catch(e) {}
-        const detailHtml = generateDetailPage(n, brand, name, ref, date, cond, set, price, imgName);
+        const detailHtml = generateDetailPage(n, brand, name, ref, date, cond, set, price, images);
         await ghPut(`${id}.html`, detailHtml, `Update ${id}.html`, detailSha);
         setStepDone(s4);
 
